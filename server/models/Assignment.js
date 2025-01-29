@@ -10,7 +10,7 @@ const assignmentChatSchema = new mongoose.Schema({
         timeStamp: { type: Date, default: Date.now },
         prompt: { type: String, required: true },
         output: { type: String, required: true },
-        fileUrl: { type: String } // Store uploaded image URL for responses
+        fileUrl: { type: String } 
     }]
 }, { timestamps: true });
 

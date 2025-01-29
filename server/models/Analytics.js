@@ -1,6 +1,13 @@
 const analyticsSchema = new mongoose.Schema({
-    studentId: { type: mongoose.Schema.Types.ObjectId, ref: "Student", required: true },
-    studyHours: { type: Number, default: 0 },
+    studentId: { 
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Student",
+        required: true 
+    },
+    studyHours: { 
+        type: Number,
+        default: 0
+    },
     scores: [{
         subjectId: { type: mongoose.Schema.Types.ObjectId, ref: "Subject" },
         subjectName: { type: String },
