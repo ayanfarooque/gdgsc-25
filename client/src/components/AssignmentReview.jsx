@@ -1,11 +1,23 @@
-import React from 'react'
+import React, { useState } from "react";
+import AssignmentList from "./AssignmentList";
+import AssignmentViewer from "./AssignmentViewer";
+import AssignmentUploader from "./AssignmentUploader";
 
 const AssignmentReview = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+  const [selectedAssignment, setSelectedAssignment] = useState(null);
 
-export default AssignmentReview
+  return (
+    <div className="flex h-screen">
+      {/* Sidebar for previous assignments */}
+      <AssignmentList onSelect={setSelectedAssignment} />
+
+      {/* Viewer to show selected assignment */}
+      <AssignmentViewer assignmentId={selectedAssignment} />
+
+      {/* Uploader to submit new assignments */}
+      <AssignmentUploader onUpload={() => window.location.reload()} />
+    </div>
+  );
+};
+
+export default AssignmentReview;

@@ -14,6 +14,8 @@ app.get('/', (req, res) => {
     res.send('API is running...');
 });
 
+app.use("/api/assignments", assignmentRoutes);
+
 // Import and use routes
 // const chatbotRoutes = require('./routes/chatbotRoutes');
 // const assignmentRoutes = require('./routes/assignmentRoutes');
