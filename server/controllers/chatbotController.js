@@ -61,7 +61,6 @@ exports.getPreviousChats = async (req, res) => {
     }
 };
 
-// Fetch responses for a specific chat
 exports.getChatResponses = async (req, res) => {
     try {
         const { chatId } = req.params;

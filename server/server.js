@@ -15,17 +15,12 @@ app.get('/', (req, res) => {
 });
 
 app.use("/api/assignments", assignmentRoutes);
+app.use("/api/students", studentRoutes);
+app.use("/api/teachers", teacherRoutes);
 
-// Import and use routes
-// const chatbotRoutes = require('./routes/chatbotRoutes');
-// const assignmentRoutes = require('./routes/assignmentRoutes');
-// const resourceRoutes = require('./routes/resourceRoutes');
-// const classroomRoutes = require('./routes/classroomRoutes');
 
-// app.use('/api/chatbot', chatbotRoutes);
-// app.use('/api/assignment', assignmentRoutes);
-// app.use('/api/resource', resourceRoutes);
-// app.use('/api/classroom', classroomRoutes);
-
+app.use((req, res, next) => {
+    res.status(404).json({ message: 'Route not found' });
+});
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

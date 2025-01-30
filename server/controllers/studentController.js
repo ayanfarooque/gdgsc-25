@@ -1,22 +1,22 @@
 const Student = require('../models/Student')
 
-exports.addStudent = async (req,res) => {
-    try {
-        const {name,address,dob,grade,subjects} = req.body;
+// exports.addStudent = async (req,res) => {
+//     try {
+//         const {name,address,dob,grade,subjects} = req.body;
 
-        const student = new Student({
-            name,
-            address,
-            dob,
-            grade,
-            subjects
-        })
+//         const student = new Student({
+//             name,
+//             address,
+//             dob,
+//             grade,
+//             subjects
+//         })
 
-        res.status(201).json({success:true,student})
-    } catch (error) {
-        res.status(500).json({ success: false, error: error.message });
-    }
-}
+//         res.status(201).json({success:true,student})
+//     } catch (error) {
+//         res.status(500).json({ success: false, error: error.message });
+//     }
+// }
 
 exports.getStudentDetails = async (req,res) => {
     try {
