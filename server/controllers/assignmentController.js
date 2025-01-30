@@ -1,6 +1,9 @@
 const assignment = require('../models/Assignment.js')
 const { gradeassignment } = require('../services/mlService.js')
 
+
+//student can upload assignment in client assignment chat body 
+
 exports.uploadAssignment = async (req,res) => {
     try {
         const {studentid,subjectid,teacherid} = req.body;
