@@ -1,25 +1,25 @@
-const Teacher = require('../models/Teacher')
+const Teacher = require('../models/Teacher.js')
 
-exports.addTeacher = async (req,res) => {
-    try {
-        const {name, address,dob,subjects} = req.body;
+// exports.addTeacher = async (req,res) => {
+//     try {
+//         const {name, address,dob,subjects} = req.body;
 
-        const teacher = new Teacher({
-            name,
-            address,
-            dob,
-            subjects
-        })
-        await teacher.save()
+//         const teacher = new Teacher({
+//             name,
+//             address,
+//             dob,
+//             subjects
+//         })
+//         await teacher.save()
 
-        res.status(201).json({
-            success:false,
-            error: error.message
-        })
-    } catch (error) {
-        res.status(500).json({success:false,error: error.message})
-    }
-}
+//         res.status(201).json({
+//             success:false,
+//             error: error.message
+//         })
+//     } catch (error) {
+//         res.status(500).json({success:false,error: error.message})
+//     }
+// }
 
 exports.getTeacherDetails = async (req, res) => {
     try {
