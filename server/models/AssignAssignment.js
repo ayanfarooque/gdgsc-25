@@ -30,7 +30,10 @@ const assignassginment = new mongoose.Schema({
     },
     attachments: [{
         type: String
-    }]
+    }],
+    isCompleted: { type: Boolean,default: false },
+    gradingCriteria: { type: String }, 
+    submissions: [{ type: mongoose.Schema.Types.ObjectId, ref: "Assignment" }]
 },{ timestamps: true })
 
 module.exports = mongoose.model("Assignment", assignassginment);
