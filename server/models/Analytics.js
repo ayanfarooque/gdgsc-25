@@ -11,15 +11,17 @@ const analyticsSchema = new mongoose.Schema({
     scores: [{
         subjectId: { type: mongoose.Schema.Types.ObjectId, ref: "Subject" },
         subjectName: { type: String },
-        marks: [{
+        tests: [{
             testId: { type: mongoose.Schema.Types.ObjectId, ref: "Test" },
-            testMarks: { type: Number }
+            testDate: { type: Date, required: true },
+            testMarks: { type: Number, required: true }
         }]
     }],
     growthPoints: [{
         subjectId: { type: mongoose.Schema.Types.ObjectId, ref: "Subject" },
-        subjectPoints: { type: Number }
-    }]
+        subjectPoints: { type: Number, default: 0 }
+    }],
+    totalGrowthPoints: { type: Number, default: 0 }
 }, { timestamps: true });
 
 module.exports = mongoose.model("Analytics", analyticsSchema);

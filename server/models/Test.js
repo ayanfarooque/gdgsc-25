@@ -1,3 +1,5 @@
+const mongoose = require('mongoose')
+
 const testSchema = new mongoose.Schema({
     testId: { type: String, required: true, unique: true },
     subjectId: {type: mongoose.Schema.Types.ObjectId,ref: "Teacher",required:true},
