@@ -1,7 +1,14 @@
 const testSchema = new mongoose.Schema({
     testId: { type: String, required: true, unique: true },
-    subjectName: { type: String, required: true },
-    marks: { type: Number, required: true }
+    subjectId: {type: mongoose.Schema.Types.ObjectId,ref: "Teacher",required:true},
+    teacherId: {type: mongoose.Schema.Types.ObjectId,ref:"Classroom",required:true},
+    questions: [{
+        questionText: { type: String, required: true },
+        options: [{ type: String, required: true }], 
+        correctAnswer: { type: String, required: true }
+    }],
+    timeLimit: { type: Number, default: 30 }, 
+    createdAt: { type: Date, default: Date.now }
 }, { timestamps: true });
 
 module.exports = mongoose.model("Test", testSchema);
