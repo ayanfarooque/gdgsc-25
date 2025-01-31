@@ -16,8 +16,22 @@ const studentSchema = new mongoose.Schema({
     }],
 
     teachers: [{
-        teacherId: { type: mongoose.Schema.Types.ObjectId, ref: "Teacher" }
-    }]
+        teacherId: { type: mongoose.Schema.Types.ObjectId, ref: "Teacher" },
+        teacherName: {type: String,required: true},
+        subjectId: {type:mongoose.Schema.Types.ObjectId,ref: "Subject",required: true}
+    }],
+
+    testScores: [{
+        subjectId: {type: mongoose.Schema.Types.ObjectId,ref: "Subject",required: true},
+        subjectName: {type: String, required:true},
+        date: {type: Date,default: Date.now},
+        score: {type: Number,required: true},
+        total: {type: Number,required: true}
+    }],
+
+    badges: [{
+        type: String
+    }],
 }, { timestamps: true });
 
 studentSchema.pre("save", async function (next) {
