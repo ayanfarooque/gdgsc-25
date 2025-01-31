@@ -3,6 +3,11 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const connectDB = require('./config/db.js');
 
+const assignmentRoutes = require('./routes/assignmentRoutes.js');
+const studentRoutes = require('./routes/studentRoutes.js');
+const teacherRoutes = require('./routes/teacherRoutes.js');
+const subjectRoutes = require('./routes/subjectRoutes.js');
+
 dotenv.config();
 connectDB();
 
@@ -17,7 +22,7 @@ app.get('/', (req, res) => {
 app.use("/api/assignments", assignmentRoutes);
 app.use("/api/students", studentRoutes);
 app.use("/api/teachers", teacherRoutes);
-
+app.use("/api/subjects", subjectRoutes);
 
 app.use((req, res, next) => {
     res.status(404).json({ message: 'Route not found' });
