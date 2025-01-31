@@ -12,7 +12,9 @@ const assignmentChatSchema = new mongoose.Schema({
         prompt: { type: String, required: true },
         output: { type: String, required: true },
         fileUrl: { type: String } 
-    }]
+    }],
+    aiScore: { type: Number, default: null }, 
+    feedback: { type: String, default: "" }
 }, { timestamps: true });
 
 module.exports = mongoose.model("AssignmentChat", assignmentChatSchema);
