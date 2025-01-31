@@ -1,11 +1,12 @@
 const Classroom = require('../models/Classroom');
 const AssignAssignment = require('../models/AssignAssignment')
-const Student = require('../models/Student')
-const Teacher = require('../models/Teacher')
+const Student = require('../models/Student.js')
+const Teacher = require('../models/Teacher.js')
 
 exports.createClassroom = async(req,res) => {
     try {
         const {name, studentIds} = req.body;
+        //here teacher id will be getted by middelware which will be just placed before createClassroom api in classroom routes
         const teacherId = req.teacher._id;
         const classroom = new Classroom({
             name,
