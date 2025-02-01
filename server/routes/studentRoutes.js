@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const studentController = require("../controllers/studentController");
-const authController =  require('../controllers/authController')
-const {authStudent} = require("../middleware/authStudent")
-
+const studentController = require("../controllers/studentController.js");
+const authController =  require('../controllers/authController.js')
+const {authStudent} = require("../middleware/authStudent.js")
+const {authTeacher} = require('../middleware/authTeacher.js')
 router.post("/register", authController.studentsSignUp);
 router.post("/login", authController.studentLogin);
 
