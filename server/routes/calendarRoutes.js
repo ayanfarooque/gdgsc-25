@@ -2,8 +2,8 @@ const express = require("express")
 const eventController = require('../controllers/eventController.js')
 const {authStudent} = require('../middleware/authStudent.js')
 const {authTeacher} = require('../middleware/authTeacher.js')
-
-router.get("/", authStudent, eventController.getEvents);
+const router = express.Router();
+router.get("/events", authStudent, eventController.getEvents);
 
 router.post("/create", authTeacher, eventController.createEvent);
 
