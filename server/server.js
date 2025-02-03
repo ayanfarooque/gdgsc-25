@@ -8,6 +8,7 @@ const studentRoutes = require('./routes/studentRoutes.js');
 const teacherRoutes = require('./routes/teacherRoutes.js');
 const subjectRoutes = require('./routes/subjectRoutes.js');
 const testResultRoutes = require('./routes/testResultRoutes.js')
+const notificationRoutes = require('./routes/notificationsRoutes.js')
 const newsRoute = require('./routes/newsRoute.js')
 dotenv.config();
 connectDB();
@@ -26,6 +27,7 @@ app.use("/api/teachers", teacherRoutes);
 app.use("/api/subjects", subjectRoutes);
 app.use('/api/test-scores',testResultRoutes);
 app.use('/api/news',newsRoute)
+app.use('/api/notify',notificationRoutes)
 app.use((req, res, next) => {
     res.status(404).json({ message: 'Route not found' });
 });
