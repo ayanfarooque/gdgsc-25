@@ -9,11 +9,12 @@ const studentSchema = new mongoose.Schema({
     dob: { type: Date, required: true },
     grade: { type: String, required: true },
     growthPoints: { type: Number, default: 0 },
-
+    gaurdianName: {type: String},
     subjects: [{
         subjectId: { type: mongoose.Schema.Types.ObjectId, ref: "Subject" },
         subjectName: { type: String } // Added subject name for better data management
     }],
+    isWeakStudent: {type: Boolean,default: false},
 
     teachers: [{
         teacherId: { type: mongoose.Schema.Types.ObjectId, ref: "Teacher" },
