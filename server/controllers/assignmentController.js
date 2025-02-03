@@ -1,4 +1,4 @@
-const assignment = require('../models/Assignment.js')
+const Assignment = require('../models/Assignment.js')
 const { gradeassignment } = require('../services/mlService.js')
 
 
@@ -19,7 +19,7 @@ exports.uploadAssignment = async (req,res) => {
             grade: aigrade
         });
 
-        await assigment.save();
+        await assignment.save();
 
         res.status(201).json({success: true, assignment})
     } catch (error) {
