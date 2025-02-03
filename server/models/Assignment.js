@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const assignmentChatSchema = new mongoose.Schema({
     chatId: { type: String, required: true, unique: true },
+    assignmentId: { type: mongoose.Schema.Types.ObjectId, ref: "Assignment", required: true },
     subjectId: { type: mongoose.Schema.Types.ObjectId, ref: "Subject", required: true },
     teacherId: { type: mongoose.Schema.Types.ObjectId, ref: "Teacher", required: true },
     studentId: { type: mongoose.Schema.Types.ObjectId, ref: "Student", required: true },
