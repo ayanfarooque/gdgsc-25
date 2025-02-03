@@ -1,4 +1,5 @@
 const Assignment = require('../models/Assignment.js')
+const SubmitAssignment = require('../models/SubmitAssignment.js');
 const { gradeassignment } = require('../services/mlService.js')
 
 
@@ -6,17 +7,19 @@ const { gradeassignment } = require('../services/mlService.js')
 
 exports.uploadAssignment = async (req,res) => {
     try {
-        const {studentid,subjectid,teacherid} = req.body;
+        const {studentid,subjectid,teacherid,assignmentId} = req.body;
         const file = req.file.path;
 
         const aigrade = await gradeassignment(file);
 
         const assignment = new Assignment({
+            assignmentId,
             studentid,
             subjectid,
             teacherid,
-            file,
-            grade: aigrade
+            fileUrl: file,
+            aiScore: aigrade,
+            status: "Pending"
         });
 
         await assignment.save();
@@ -28,29 +31,32 @@ exports.uploadAssignment = async (req,res) => {
     }
 }
 
-exports.getpreviousassignments = async (req,res) => {
+exports.getpreviousassignments = async (req, res) => {
     try {
-        const {studentid} = req.params;
-        const assigments = await assignment.find({studentid}).sort({uploadedAt: -1});
-        res.status(200).json({success: true,assigments})
+        const { studentid } = req.params;
+        const assignments = await SubmitAssignment.find({ studentId: studentid })
+            .sort({ createdAt: -1 })
+            .populate("assignmentId", "title dueDate");
+
+        res.status(200).json({ success: true, assignments });
     } catch (error) {
-        console.log('error in getting all previous assingments',error.message);
-        res.status(500).json({success:false,message: "error occured in getting all previous assignments"})
+        console.error("Error fetching previous assignments:", error.message);
+        res.status(500).json({ success: false, message: "Error fetching assignments" });
     }
-}
+};
 
-exports.getsingleassignment = async(req,res) => {
+exports.getsingleassignment = async (req, res) => {
     try {
-        const {assigmentId} = req.params;
-        const assignment = await assignment.findById(assigmentId)
+        const { assignmentId } = req.params;
+        const assignment = await SubmitAssignment.findById(assignmentId).populate("assignmentId");
 
-        if(!assignment){
-            return res.status(404).json({success:false,message: "assignment not found"})
+        if (!assignment) {
+            return res.status(404).json({ success: false, message: "Assignment not found" });
         }
 
-        res.status(200).json({success: true,assignment})
+        res.status(200).json({ success: true, assignment });
     } catch (error) {
-        console.log('error in getting  assingment',error.message);
-        res.status(500).json({success:false,message: "error occured in getting assignment"})
+        console.error("Error fetching assignment:", error.message);
+        res.status(500).json({ success: false, message: "Error fetching assignment" });
     }
-}
+};
