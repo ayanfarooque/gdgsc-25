@@ -1,6 +1,7 @@
 import React from "react";
 
 const PendingAssignment = () => {
+
   return (
     <div className="bg-gradient-to-r from-red-500 via-red-600 to-red-700 p-6 rounded-lg text-white w-full max-w-md mx-auto ">
       <h2 className="text-2xl font-semibold mb-4 text-center tracking-wide">⏳ Pending Assignments</h2>
@@ -20,3 +21,5 @@ const PendingAssignment = () => {
 };
 
 export default PendingAssignment;
+
+

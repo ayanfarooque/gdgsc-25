@@ -20,3 +20,4 @@ const SubmittedAssignments = () => {
 };
 
 export default SubmittedAssignments;
+
