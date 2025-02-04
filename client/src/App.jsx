@@ -5,6 +5,7 @@ import ChatPage from './pages/Chatpage';
 import TestPage from './pages/TestPage';
 import Navbar from './components/Navbar';
 import AssignmentPage from './pages/AssignmentPage';
+import ResourcePage from './pages/ResourcePage';
 const App = () => {
   return (
     <div>
@@ -14,7 +15,7 @@ const App = () => {
       <Route path='/chat-page' element={<ChatPage />} />
       <Route path='/test' element={<TestPage />} />
       <Route path='/Assignment' element={<AssignmentPage />} />
-
+      <Route path='/Resources' element={<ResourcePage />} />
       </Routes>
     </div>
   )
