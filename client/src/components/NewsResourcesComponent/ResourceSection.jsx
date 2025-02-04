@@ -4,6 +4,7 @@ import Card from "./Card.jsx";
 import { useParams } from "react-router-dom";
 
 const ResourceSection = () => {
+
   const {newsId} = useParams();
   const [newsinfo,setnewinfo] = useState()
 
@@ -18,6 +19,7 @@ const ResourceSection = () => {
   }, [newsdata, newsId]);
   return (
     <div className="w-1/4 h-100 bg-teal-400 p-4 rounded-md shadow-md transition-transform transform hover:scale-105 ml-4">
+
       <h2 className="text-lg font-bold text-black">TEACHER RECOMMENDED</h2>
       <div className="mt-2 space-y-2  flex flex-col h-full">
         {newsdata.slice(0, 2).map((news, index) => (
