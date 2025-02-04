@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { Route, Routes } from 'react-router-dom';
 import StudentPage from './pages/StudentPage';
 import TestPage from './pages/TestPage';
-
 import Sidebar from './components/Dashboardcomponents/Sidebar';
 import AssignmentPage from './pages/AssignmentPage';
 import ResourcePage from './pages/ResourcePage';
@@ -47,6 +46,7 @@ const App = () => {
           <Route path='/prev' element={<TeacherHomePage />} />
         </Routes>
       </div>
+
     </div>
   ) : (
     <>

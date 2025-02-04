@@ -15,3 +15,4 @@ const Card = ({ newsId, newsHeading, newsContent, newsImage }) => {
 };
 
 export default Card;
+
