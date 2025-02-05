@@ -24,19 +24,11 @@ const testResultSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-    totalQuestions: {
+    MaximumMarks: {
         type: Number,
         required: true,
     },
-    correctAnswer: {
-        type: Number,
-        required: true,
-    },
-    incorrectAnswers: {
-        type: Number,
-        required: trusted,
-    },
-    attemptedAt: {
+    CratedAt: {
         type: Date,
         default: Date.now
     }
