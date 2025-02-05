@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../components/header.dart';
 //import 'package:fl_chart/fl_chart.dart';
 
 class HomePage extends StatelessWidget {
@@ -11,42 +12,40 @@ class HomePage extends StatelessWidget {
           const Color.fromARGB(255, 73, 171, 176), // Background color
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(0.0, 70.0, 0.0, 0.0),
+          padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Top Bar
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const CircleAvatar(
-                    radius: 24,
-                    backgroundImage: AssetImage('assets/profile.png'),
-                  ),
-                  const Text(
-                    "WELCOME HASHIM",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.notifications),
-                    onPressed: () {},
-                  ),
-                ],
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child:
+                    // Top Bar
+                    Header(
+                        onProfileTap: () {
+                          Navigator.pushNamed(context, '/profile');
+                        },
+                        onNotificationTap: () {
+                          Navigator.pushNamed(context, '/notifications');
+                        },
+                        profileImage: 'assets/images/image3.png',
+                        welcomeText: "WELCOME HASHIM"),
               ),
 
               const SizedBox(height: 10),
+              //main box
               Container(
                   margin: const EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
                   padding: const EdgeInsets.fromLTRB(4.0, 12.0, 4.0, 12.0),
                   decoration: BoxDecoration(
                     color: const Color.fromARGB(255, 245, 245, 221),
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(30),
                   ),
                   child: Column(
                     children: [
                       const SizedBox(
                         height: 15,
                       ),
+                      //calender
                       Container(
                         margin: EdgeInsets.all(8.0),
                         padding: const EdgeInsets.all(12),
@@ -65,17 +64,21 @@ class HomePage extends StatelessWidget {
                             ),
                             const SizedBox(height: 10),
                             Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
                               height: 100,
-                              color:
-                                  Colors.white, // Placeholder for the calendar
+                              // Placeholder for the calendar
                             ),
                           ],
                         ),
                       ),
+                      //pending assignments
                       Container(
                         margin: const EdgeInsets.all(8.0),
                         padding:
-                            const EdgeInsets.fromLTRB(12.0, 20.0, 12.0, 20.0),
+                            const EdgeInsets.fromLTRB(12.0, 20.0, 12.0, 10.0),
                         decoration: BoxDecoration(
                           color: const Color(0xFF49ABB0),
                           borderRadius: BorderRadius.circular(20),
@@ -90,7 +93,6 @@ class HomePage extends StatelessWidget {
                                   fontWeight: FontWeight.w100,
                                   color: Colors.black),
                             ),
-                            const SizedBox(height: 10),
                             ListView(
                               shrinkWrap: true,
                               children: [
@@ -104,7 +106,13 @@ class HomePage extends StatelessWidget {
                       const SizedBox(height: 8),
                       ElevatedButton(
                         onPressed: () {},
-                        child: const Text("Submit"),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFF49ABB0),
+                          elevation: 8,
+                          shadowColor: Colors.black,
+                        ),
+                        child: const Text("SUBMIT",
+                            style: TextStyle(color: Colors.white)),
                       ),
                     ],
                   )),
@@ -144,21 +152,35 @@ class HomePage extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFD9D6B0),
-                  borderRadius: BorderRadius.circular(12),
+                  color: const Color.fromARGB(255, 236, 231, 202),
+                  borderRadius: BorderRadius.circular(30),
                 ),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    const Text(
+                      "TEST SCORES",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w100,
+                          color: Colors.black),
+                    ),
                     _scoreTile(
                         "22/01/25", "SSTUT01", "SST", "Vikul J Pawar", "12/15"),
                     _scoreTile(
                         "24/01/25", "SCIUT01", "SCI", "Sol C Sharma", "15/15"),
                     _scoreTile(
                         "25/01/25", "HINUT01", "HIN", "Vinit Pandey", "14/15"),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 12),
                     ElevatedButton(
                       onPressed: () {},
-                      child: const Text("VIEW ALL"),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF49ABB0),
+                        elevation: 8,
+                        shadowColor: Colors.black,
+                      ),
+                      child: const Text("VIEW ALL",
+                          style: TextStyle(color: Colors.white)),
                     ),
                   ],
                 ),
@@ -188,8 +210,8 @@ class HomePage extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          color: Colors.redAccent,
-          borderRadius: BorderRadius.circular(8),
+          color: const Color(0xFFEF5350),
+          borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -217,11 +239,11 @@ class HomePage extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(date, style: const TextStyle(fontWeight: FontWeight.bold)),
+            Text(date, style: const TextStyle(fontWeight: FontWeight.normal)),
             Text(id),
             Text(subject),
             Text(teacher),
-            Text(marks, style: const TextStyle(fontWeight: FontWeight.bold)),
+            Text(marks, style: const TextStyle(fontWeight: FontWeight.normal)),
           ],
         ),
       ),
