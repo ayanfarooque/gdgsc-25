@@ -17,21 +17,21 @@ function StudentPage() {
         
         {/* Center Content */}
         <main className="flex-1 space-y-6">
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 cursor-pointer gap-6">
             <div className="bg-white rounded-xl p-6 shadow-md transition-transform transform hover:scale-105">
               <h2 className="text-xl font-semibold mb-4">Calendar</h2>
               <CalendarComponent />
             </div>
-            <div className="bg-white rounded-xl p-6 shadow-md transition-transform transform hover:scale-105">
+            <div className="bg-white rounded-xl cursor-pointer p-6 shadow-md transition-transform transform hover:scale-105">
               <PendingAssignments />
             </div>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-white rounded-xl p-6 shadow-md transition-transform transform hover:scale-105">
+            <div className="bg-white rounded-xl p-6 cursor-pointer shadow-md transition-transform transform hover:scale-105">
               <Analytics />
             </div>
-            <div className="bg-white rounded-xl p-6 shadow-md transition-transform transform hover:scale-105">
+            <div className="bg-white rounded-xl p-6 cursor-pointer shadow-md transition-transform transform hover:scale-105">
               
               <TestScores />
             </div>
@@ -39,7 +39,7 @@ function StudentPage() {
         </main>
 
         {/* Profile Card */}
-        <div className="hidden h-full lg:block w-72 transition-transform transform hover:scale-105">
+        <div className="hidden h-full cursor-pointer lg:block w-72 transition-transform transform hover:scale-105">
           <ProfileCard />
           
         </div>
