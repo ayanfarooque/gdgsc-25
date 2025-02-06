@@ -26,7 +26,7 @@ const App = () => {
     <div>
       <Navbar />
       <Routes>
-      <Route path="/student-dashborad" element={<StudentPage />} />
+      <Route path="/" element={<StudentPage />} />
       <Route path='/chat-page' element={<ChatPage />} />
       <Route path='/test' element={<TestPage />} />
       <Route path='/Assignment' element={<AssignmentPage />} />
