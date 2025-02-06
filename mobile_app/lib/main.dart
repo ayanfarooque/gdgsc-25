@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import './assets/pages/home.dart';
+import './assets/pages/assignment/landing.dart';
+import './assets/pages/aibot/landing.dart';
+import './assets/pages/resources/landing.dart';
+import './assets/pages/community/landing.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,8 +37,10 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const HomePage(),
-        //'/page1': (context) => const Profile(),
-        //'/page2': (context) => const Scores(),
+        '/assignment': (context) => AssignmentLanding(),
+        '/aibot': (context) => AiLanding(),
+        '/resources': (context) => ResourceLanding(),
+        '/community': (context) => CommunityLanding(),
       },
     );
   }

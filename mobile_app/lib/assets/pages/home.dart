@@ -1,9 +1,42 @@
 import 'package:flutter/material.dart';
 import '../components/header.dart';
+import '../components/footer.dart';
 //import 'package:fl_chart/fl_chart.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+  }
+
+  class _HomePageState extends State<HomePage> {
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    // Navigate to different pages based on index
+    switch (index) {
+      case 0:
+        Navigator.pushNamed(context, '/');
+        break;
+      case 1:
+        Navigator.pushNamed(context, '/assignment');
+        break;
+      case 2:
+        Navigator.pushNamed(context, '/community');
+        break;
+      case 3:
+        Navigator.pushNamed(context, '/aibot');
+        break;
+      case 4:
+        Navigator.pushNamed(context, '/resources');
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -191,15 +224,9 @@ class HomePage extends StatelessWidget {
       ),
 
       // Bottom Navigation Bar
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color(0xFF4BA3C3),
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.grey[400],
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: ""),
-          BottomNavigationBarItem(icon: Icon(Icons.analytics), label: ""),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: ""),
-        ],
+      bottomNavigationBar:  Footer(
+        selectedIndex: _selectedIndex,
+        onItemTapped: _onItemTapped,
       ),
     );
   }
