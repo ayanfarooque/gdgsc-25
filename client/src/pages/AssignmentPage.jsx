@@ -1,5 +1,5 @@
 import React from 'react'
-import Sidebar from '../components/chatcompnent/Sidebar'
+import Sidebar from '../components/studentpage/Sidebar';
 import Navbar from '../components/Navbar'
 import AssignmentBot from '../components/AssignmentComponent/AssignmentBot'
 import ReviewSection from '../components/AssignmentComponent/ReviewSection'
