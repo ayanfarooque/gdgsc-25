@@ -5,7 +5,6 @@ import Analytics from '../components/studentpage/Analytics';
 import TestScores from '../components/studentpage/TestScores';
 import PendingAssignments from '../components/studentpage/PendingAssignment';
 import ProfileCard from '../components/studentpage/ProfileCard';
-
 function StudentPage() {
   return (
     <div className="min-h-screen bg-[#f4f1ea] font-sans flex">
@@ -19,21 +18,20 @@ function StudentPage() {
         {/* Center Content */}
         <main className="flex-1 space-y-6">
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-white rounded-xl p-6 shadow-md">
+            <div className="bg-white rounded-xl p-6 shadow-md transition-transform transform hover:scale-105">
               <h2 className="text-xl font-semibold mb-4">Calendar</h2>
               <CalendarComponent />
             </div>
-            <div className="bg-white rounded-xl p-6 shadow-md">
-              <h2 className="text-xl font-semibold mb-4">Pending Assignments</h2>
+            <div className="bg-white rounded-xl p-6 shadow-md transition-transform transform hover:scale-105">
               <PendingAssignments />
             </div>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-white rounded-xl p-6 shadow-md">
+            <div className="bg-white rounded-xl p-6 shadow-md transition-transform transform hover:scale-105">
               <Analytics />
             </div>
-            <div className="bg-white rounded-xl p-6 shadow-md">
+            <div className="bg-white rounded-xl p-6 shadow-md transition-transform transform hover:scale-105">
               
               <TestScores />
             </div>
@@ -41,8 +39,9 @@ function StudentPage() {
         </main>
 
         {/* Profile Card */}
-        <div className="hidden lg:block w-72">
+        <div className="hidden h-full lg:block w-72 transition-transform transform hover:scale-105">
           <ProfileCard />
+          
         </div>
       </div>
     </div>
@@ -50,3 +49,4 @@ function StudentPage() {
 }
 
 export default StudentPage;
+
