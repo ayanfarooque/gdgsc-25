@@ -60,6 +60,25 @@ class _LandingPageState extends State<AssignmentLanding> {
                               profileImage: 'assets/images/image3.png',
                               welcomeText: "WELCOME HASHIM"),
                     ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      height: 600,
+                      width: 420,
+                      margin: const EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
+                      padding: const EdgeInsets.fromLTRB(4.0, 12.0, 4.0, 12.0),
+                      decoration: BoxDecoration(
+                        color: const Color.fromARGB(255, 236, 231, 202),
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: Column(children: [
+                        const SizedBox(
+                          height: 15,
+                        ),
+
+                      ]),
+                    ),
                   ]))),
       bottomNavigationBar: Footer(
         selectedIndex: _selectedIndex,

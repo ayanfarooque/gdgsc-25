@@ -138,7 +138,9 @@ class _HomePageState extends State<HomePage> {
                       ),
                       const SizedBox(height: 8),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/assignment');
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF49ABB0),
                           elevation: 8,

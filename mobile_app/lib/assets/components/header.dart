@@ -27,7 +27,9 @@ class Header extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ElevatedButton(
-                  onPressed: onProfileTap,
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/profile');
+                  },
                   style: ElevatedButton.styleFrom(
                     shape: const CircleBorder(),
                     padding: const EdgeInsets.all(8.0),
@@ -41,7 +43,8 @@ class Header extends StatelessWidget {
                 ),
                 Text(
                   welcomeText,
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 CircleAvatar(
                   radius: 24,
