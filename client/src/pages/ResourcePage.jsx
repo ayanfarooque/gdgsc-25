@@ -1,6 +1,6 @@
 import React from 'react'
 import SearchBar from '../components/NewsResourcesComponent/SearchBar'
-import Sidebar from '../components/StudentTestMarks/Sidebar'
+import Sidebar from '../components/studentpage/Sidebar';
 import Card from '../components/NewsResourcesComponent/Card'
 import ResourceSection from '../components/NewsResourcesComponent/ResourceSection'
 import TogelSection from '../components/NewsResourcesComponent/TogelSection'
