@@ -21,7 +21,7 @@ const App = () => {
   const handleRoleSelection = (role) => {
     setSelectedRole(role);
   }
-  const token = false;
+  const token = true;
   return token ?(
     <div>
       <Navbar />
