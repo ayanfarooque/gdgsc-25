@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Route, Routes } from 'react-router-dom';
 import StudentPage from './pages/StudentPage';
 import ChatPage from './pages/Chatpage';
@@ -10,9 +10,19 @@ import NewsDetail from './components/NewsResourcesComponent/NewsDetail'
 import TeacherAssignment from './pages/TeacherAssignment';
 import StatusPage from './pages/StatusPage';
 import TeachersCommunityPage from './pages/TeachersCommunityPage';
+import LoginSelection from './pages/LoginSelection';
+import TeacherLogin from './pages/TeacherLogin';
+import StudentLogin from './pages/StudentLogin';
 
 const App = () => {
-  return (
+
+  const[selectedRole, setSelectedRole] = useState("");
+
+  const handleRoleSelection = (role) => {
+    setSelectedRole(role);
+  }
+  const token = false;
+  return token ?(
     <div>
       <Navbar />
       <Routes>
@@ -27,6 +37,12 @@ const App = () => {
       <Route path='/teachers-Community' element={<TeachersCommunityPage />} />
       </Routes>
     </div>
+  ): (
+    <>
+    {selectedRole === "" && <LoginSelection onSelect={handleRoleSelection} />}
+    {selectedRole === "teacher" && <TeacherLogin />}
+    {selectedRole === "student" && <StudentLogin />}
+    </>
   )
 }
 
