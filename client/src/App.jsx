@@ -8,6 +8,7 @@ import ResourcePage from './pages/ResourcePage';
 import NewsDetail from './components/NewsResourcesComponent/NewsDetail'
 import TeacherAssignment from './pages/TeacherAssignment';
 import StatusPage from './pages/StatusPage';
+<<<<<<< HEAD
 import TeachersCommunityPage from './pages/TeachersCommunityPage';
 import LoginSelection from './pages/LoginSelection';
 import TeacherLogin from './pages/TeacherLogin';
@@ -48,6 +49,23 @@ const App = () => {
       </div>
 
 
+=======
+
+const App = () => {
+  return (
+    <div>
+      <Navbar />
+      <Routes>
+      <Route path="/student-dashborad" element={<StudentPage />} />
+      <Route path='/chat-page' element={<ChatPage />} />
+      <Route path='/test' element={<TestPage />} />
+      <Route path='/Assignment' element={<AssignmentPage />} />
+      <Route path='/Resources' element={<ResourcePage />} />
+      <Route path="/news/:newsId" element={<NewsDetail />} />
+      <Route path='/teacher-Assignment' element={<TeacherAssignment/>} />
+      <Route  path='/status-page' element={<StatusPage />} />
+      </Routes>
+>>>>>>> 2c47c35 (Status page added)
     </div>
   ) : (
     <>
