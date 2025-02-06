@@ -1,26 +1,41 @@
-import { Home, Globe, BookOpen, Calendar, Settings } from "react-feather"
+import { Home, Globe, BookOpen, Calendar, Settings, MessageCircle } from "react-feather";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function Sidebar() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   return (
-    <aside className="hidden md:flex flex-col gap-4 bg-[#26c6c0] p-4 rounded-xl w-20">
-      <button className="p-4 bg-[#1ea39e] rounded-lg">
+    <aside className="hidden md:flex flex-col gap-4 bg-teal-700 p-4 w-20">
+      <button 
+        className={`p-4 rounded-lg ${location.pathname === '/' ? 'bg-[#1ea39e]' : 'hover:bg-[#1ea39e]'}`}
+        onClick={() => navigate('/')}
+      >
         <Home className="w-6 h-6" />
       </button>
-      <button className="p-4 hover:bg-[#1ea39e] rounded-lg">
-        <Globe className="w-6 h-6" />
+
+      <button 
+        className={`p-4 rounded-lg ${location.pathname === '/chat-page' ? 'bg-[#1ea39e]' : 'hover:bg-[#1ea39e]'}`}
+        onClick={() => navigate('/chat-page')}
+      >
+        <MessageCircle className="w-6 h-6" />
       </button>
-      <button className="p-4 hover:bg-[#1ea39e] rounded-lg">
+
+      <button 
+        className={`p-4 rounded-lg ${location.pathname === '/Assignment' ? 'bg-[#1ea39e]' : 'hover:bg-[#1ea39e]'}`}
+        onClick={() => navigate('/Assignment')}
+      >
         <BookOpen className="w-6 h-6" />
       </button>
-      <button className="p-4 hover:bg-[#1ea39e] rounded-lg">
+
+      <button 
+        className={`p-4 rounded-lg ${location.pathname === '/Resources' ? 'bg-[#1ea39e]' : 'hover:bg-[#1ea39e]'}`}
+        onClick={() => navigate('/Resources')}
+      >
         <Calendar className="w-6 h-6" />
       </button>
-      <button className="p-4 hover:bg-[#1ea39e] rounded-lg">
-        <Settings className="w-6 h-6" />
-      </button>
     </aside>
-  )
+  );
 }
 
-export default Sidebar
-
+export default Sidebar;

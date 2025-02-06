@@ -19,8 +19,13 @@
     "react-feather": "^2.0.10",
     "react-icons": "^5.4.0",
     "react-router-dom": "^7.1.5",
+<<<<<<< HEAD
     "react-scripts": "^5.0.1",
+=======
+    "react-toastify": "^11.0.3",
+>>>>>>> 009ead9183f6f4c29d787d1742c9ee7eae169a33
     "recharts": "^2.15.1",
+    "styled-components": "^6.1.15",
     "tailwindcss": "^4.0.0"
   },
   "devDependencies": {

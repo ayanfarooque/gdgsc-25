@@ -10,7 +10,7 @@ function ProfileCard() {
           </div>
           <div className="space-y-2 text-sm">
             <div>
-              <span className="font-semibold">Name: </span>Admin
+              <span className="font-semibold">Name: </span>Ali
             </div>
             <div>
               <span className="font-semibold">Student ID: </span>50
@@ -36,6 +36,10 @@ function ProfileCard() {
               <span className="px-2 py-1 bg-white/20 rounded-full text-sm">⭐ 10</span>
             </div>
           </div>
+          
+          <button className="bg-black text-white py-2 mr-2 px-4 rounded-md mt-4 w-full">
+            Download Result
+          </button>
         </div>
       </div>
     )
