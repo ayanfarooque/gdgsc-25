@@ -8,9 +8,9 @@ class HomePage extends StatefulWidget {
 
   @override
   State<HomePage> createState() => _HomePageState();
-  }
+}
 
-  class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -206,7 +206,9 @@ class HomePage extends StatefulWidget {
                         "25/01/25", "HINUT01", "HIN", "Vinit Pandey", "14/15"),
                     const SizedBox(height: 12),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/viewscore');
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF49ABB0),
                         elevation: 8,
@@ -224,7 +226,7 @@ class HomePage extends StatefulWidget {
       ),
 
       // Bottom Navigation Bar
-      bottomNavigationBar:  Footer(
+      bottomNavigationBar: Footer(
         selectedIndex: _selectedIndex,
         onItemTapped: _onItemTapped,
       ),

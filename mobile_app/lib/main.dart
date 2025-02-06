@@ -4,6 +4,7 @@ import './assets/pages/assignment/landing.dart';
 import './assets/pages/aibot/landing.dart';
 import './assets/pages/resources/landing.dart';
 import './assets/pages/community/landing.dart';
+import './assets/pages/score.dart';
 
 void main() {
   runApp(const MyApp());
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
         '/aibot': (context) => AiLanding(),
         '/resources': (context) => ResourceLanding(),
         '/community': (context) => CommunityLanding(),
+        '/viewscore': (context) => ViewScores(),
       },
     );
   }
