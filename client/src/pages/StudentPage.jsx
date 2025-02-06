@@ -8,25 +8,15 @@ import ProfileCard from '../components/studentpage/ProfileCard';
 
 function StudentPage() {
   return (
-    <div className="min-h-screen bg-[#f4f1ea] font-sans">
-      {/* Header */}
-      <header className="bg-[#26c6c0] text-white p-4 shadow-md">
-        <div className="flex items-center justify-between max-w-7xl mx-auto">
-          <h1 className="text-2xl font-bold tracking-wide">E-LEARNING</h1>
-          <div className="flex items-center gap-4 text-lg">
-            <button className="p-2 hover:bg-[#1fada4] rounded transition">🔔</button>
-            <button className="p-2 hover:bg-[#1fada4] rounded transition">⚙️</button>
-            <button className="p-2 hover:bg-[#1fada4] rounded transition">📹</button>
-            <button className="p-2 hover:bg-[#1fada4] rounded transition">🎮</button>
-            <button className="p-2 hover:bg-[#1fada4] rounded transition">👤</button>
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen bg-[#f4f1ea] font-sans flex">
       
+      {/* Sidebar */}
+      <Sidebar />
+
       {/* Main Content */}
-      <div className="flex left-0 gap-6 p-6 max-w-7xl mx-auto">
-        <Sidebar />
+      <div className="flex flex-1 flex-col lg:flex-row gap-6 p-6 w-full max-w-7xl mx-auto">
         
+        {/* Center Content */}
         <main className="flex-1 space-y-6">
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-white rounded-xl p-6 shadow-md">
@@ -38,19 +28,22 @@ function StudentPage() {
               <PendingAssignments />
             </div>
           </div>
-          
-          <div className="bg-white rounded-xl p-6 shadow-md">
-            <h2 className="text-xl font-semibold mb-4">Analytics</h2>
-            <Analytics />
-          </div>
-          
-          <div className="bg-white rounded-xl p-6 shadow-md">
-            <h2 className="text-xl font-semibold mb-4">Test Scores</h2>
-            <TestScores />
+
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-white rounded-xl p-6 shadow-md">
+              <Analytics />
+            </div>
+            <div className="bg-white rounded-xl p-6 shadow-md">
+              
+              <TestScores />
+            </div>
           </div>
         </main>
-        
-        <ProfileCard />
+
+        {/* Profile Card */}
+        <div className="hidden lg:block w-72">
+          <ProfileCard />
+        </div>
       </div>
     </div>
   );
