@@ -7,6 +7,7 @@ import Navbar from './components/Navbar';
 import AssignmentPage from './pages/AssignmentPage';
 import ResourcePage from './pages/ResourcePage';
 import NewsDetail from './components/NewsResourcesComponent/NewsDetail'
+import TeacherAssignment from './pages/TeacherAssignment';
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
       <Route path='/Assignment' element={<AssignmentPage />} />
       <Route path='/Resources' element={<ResourcePage />} />
       <Route path="/news/:newsId" element={<NewsDetail />} />
+      <Route path='/teacher-Assignment' element={<TeacherAssignment/>} />
       </Routes>
     </div>
   )

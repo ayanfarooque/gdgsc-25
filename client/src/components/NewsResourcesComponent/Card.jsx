@@ -7,7 +7,7 @@ const Card = ({ newsId, newsHeading, newsContent, newsImage }) => {
   return (
     <div 
       className="p-4 border rounded-2xl border-black bg-[#F5F5DD] shadow-md h-20 w-full cursor-pointer"
-      onClick={() => navigate(`/news/${newsId}`)} // Navigate on click
+      onClick={() => navigate(`/news/${newsId}`)} 
     >
       <h3 className="font-semibold text-black">{newsHeading}</h3>
     </div>
