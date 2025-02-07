@@ -1,5 +1,5 @@
 import React from 'react'
-import Sidebar from '../components/Status/Sidebar'
+import Sidebar from '../components/TeacherHome/Sidebar'
 import Solution from '../components/TeachersComunity/Solution'
 import Navigation from '../components/TeachersComunity/Navigation'
 import Tccomp from '../components/TeachersComunity/Tccomp'

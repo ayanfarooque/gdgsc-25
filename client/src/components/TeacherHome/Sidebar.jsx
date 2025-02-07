@@ -16,7 +16,7 @@ function Sidebar() {
 
       <button 
         className={`p-4 rounded-lg ${location.pathname === '/chat-page' ? 'bg-[#bb7186]' : 'hover:bg-[#bb7186]'}`}
-        
+        onClick={() => navigate('/teachers-Community')}
       >
         <MessageCircle className="w-6 h-6" />
       </button>
