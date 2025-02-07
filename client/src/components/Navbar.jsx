@@ -20,7 +20,9 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="bg-teal-700 shadow-md p-4 flex justify-between items-center relative">
+    <nav  className={`shadow-md p-4 flex justify-between items-center relative ${
+      icon.type === FaUserCircle ? "bg-teal-700" : "bg-[#E195AB]"
+    }`}>
       <h1 className="text-white text-xl font-bold">E-LEARNING</h1>
       <div className="relative" ref={dropdownRef}>
         <div

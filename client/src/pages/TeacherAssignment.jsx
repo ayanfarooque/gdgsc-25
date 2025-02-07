@@ -1,5 +1,5 @@
 import React from 'react'
-import Sidebar from '../components/TecherAssignment/Sidebar'
+import Sidebar from '../components/TeacherHome/Sidebar'
 import ActiveAssignment from '../components/TecherAssignment/ActiveAssignment'
 import ReviewSection from '../components/TecherAssignment/ReviewSection'
 import PreviousAssignment from '../components/TecherAssignment/PreviousAssignment'
