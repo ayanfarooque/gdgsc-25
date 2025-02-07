@@ -19,10 +19,10 @@ const AssignmentPage = () => {
 
         {/* Right Section (Assignments) */}
         <div className="flex flex-col w-[30%] gap-6">
-          <div className="bg-[#29b6c6] p-4 rounded-lg shadow-md">
+          <div className="bg-[#29b6c6] transition-transform transform hover:scale-105 p-4 rounded-lg shadow-md">
             <SubmittedAssignments />
           </div>
-          <div className="bg-[#ff6b6b] p-4 rounded-lg shadow-md">
+          <div className="bg-[#ff6b6b] transition-transform transform hover:scale-105 p-4 rounded-lg shadow-md">
             <PendingAssignment />
           </div>
         </div>

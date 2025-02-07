@@ -13,6 +13,7 @@ import TeachersCommunityPage from './pages/TeachersCommunityPage';
 import LoginSelection from './pages/LoginSelection';
 import TeacherLogin from './pages/TeacherLogin';
 import StudentLogin from './pages/StudentLogin';
+import TeacherHomePage from './pages/TeacherHomePage';
 
 const App = () => {
 
@@ -35,6 +36,7 @@ const App = () => {
       <Route path='/teacher-Assignment' element={<TeacherAssignment/>} />
       <Route  path='/status-page' element={<StatusPage />} />
       <Route path='/teachers-Community' element={<TeachersCommunityPage />} />
+      <Route path='/teacher-home' element={<TeacherHomePage />} />
       </Routes>
     </div>
   ): (
