@@ -10,7 +10,8 @@ const subjectRoutes = require('./routes/subjectRoutes.js');
 const testResultRoutes = require('./routes/testResultRoutes.js')
 const notificationRoutes = require('./routes/notificationsRoutes.js')
 const newsRoute = require('./routes/newsRoute.js')
-dotenv.config();
+require("dotenv").config();
+console.log("JWT_SECRET:", process.env.JWT_SECRET);
 connectDB();
 
 const app = express();

@@ -1,29 +1,38 @@
 const jwt = require("jsonwebtoken");
 const Student = require("../models/Student.js");
 
-const JWT_SECRET = process.env.JWT_SECRET
+const JWT_SECRET = process.env.JWT_SECRET;
 
-const authStudent = async (req,res,next) => {
+const authStudent = async (req, res, next) => {
     try {
-        const token = req.header('Authorization').replace("Bearer ", "");
-        if(!token){
-            res.status(401).json({message:"Unauthorized pls provide the token"})
+        console.log("Authorization Header:", req.header("Authorization")); // Debugging line
+        
+        const authHeader = req.header("Authorization");
+        if (!authHeader || !authHeader.startsWith("Bearer ")) {
+            return res.status(401).json({ message: "Unauthorized: Please provide a valid token" });
         }
 
-        const decodedtoken = jwt.verify(token,JWT_SECRET)
-        if(decodedtoken.role !== 'student'){
-            return res.status(403).json({message:"Forbidden: Not a Student"})
+        const token = authHeader.replace("Bearer ", "");
+        console.log("Extracted Token:", token); // Debugging line
+
+        const decodedtoken = jwt.verify(token, JWT_SECRET);
+        console.log("Decoded Token:", decodedtoken); // Debugging line
+
+        if (!decodedtoken || decodedtoken.role !== "student") {
+            return res.status(403).json({ message: "Forbidden: Not a Student" });
         }
-        const student = await Student.findById(decoded.id);
+
+        const student = await Student.findById(decodedtoken.id);
         if (!student) {
-        return res.status(404).json({ message: "Student not found" });
+            return res.status(404).json({ message: "Student not found" });
         }
 
         req.student = student;
         next();
     } catch (error) {
+        console.error("JWT Verification Error:", error); // Debugging line
         res.status(401).json({ message: "Unauthorized: Invalid token" });
     }
-}
+};
 
-module.exports = {authStudent}
+module.exports = { authStudent };

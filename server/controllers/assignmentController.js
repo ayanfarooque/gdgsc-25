@@ -1,35 +1,43 @@
 const Assignment = require('../models/Assignment.js')
 const SubmitAssignment = require('../models/SubmitAssignment.js');
-const { gradeassignment } = require('../services/mlService.js')
+//const { gradeassignment } = require('../services/mlService.js')
 
 
 //student can upload assignment in client assignment chat body 
 
-exports.uploadAssignment = async (req,res) => {
+exports.uploadAssignment = async (req, res) => {
     try {
-        const {studentid,subjectid,teacherid,assignmentId} = req.body;
-        const file = req.file.path;
-
-        const aigrade = await gradeassignment(file);
-
-        const assignment = new Assignment({
-            assignmentId,
-            studentid,
-            subjectid,
-            teacherid,
-            fileUrl: file,
-            aiScore: aigrade,
-            status: "Pending"
+        if (!req.file) {
+          return res.status(400).json({ success: false, message: 'No file uploaded' });
+        }
+    
+        const { studentid, subjectid, teacherid, assignmentId, classroomId, chatId } = req.body;
+    
+        if (!studentid || !subjectid || !teacherid || !assignmentId || !classroomId || !chatId) {
+          return res.status(400).json({ success: false, message: 'All fields are required', missingFields: { studentid: !studentid, subjectid: !subjectid, teacherid: !teacherid, assignmentId: !assignmentId, classroomId: !classroomId, chatId: !chatId } });
+        }
+    
+        // Save the file metadata in the database
+        const newAssignment = new Assignment({
+          studentid,
+          subjectid,
+          teacherid,
+          assignmentId,
+          classroomId,
+          chatId,
+          filePath: req.file.path, // Store the file path in the database
+          fileName: req.file.filename, // Store the file name in the database
         });
-
-        await assignment.save();
-
-        res.status(201).json({success: true, assignment})
-    } catch (error) {
-        console.log('error occured during uploading the assignment',error.message);
-        res.status(500).json({success:false,message: "error in uploading assignments"})
-    }
-}
+    
+        await newAssignment.save();
+    
+        res.json({ success: true, message: 'Assignment uploaded successfully' });
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Error uploading assignment' });
+      }
+    };
+  
 
 exports.getpreviousassignments = async (req, res) => {
     try {
