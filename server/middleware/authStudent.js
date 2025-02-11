@@ -5,7 +5,7 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 const authStudent = async (req, res, next) => {
     try {
-        console.log("Authorization Header:", req.header("Authorization")); // Debugging line
+        console.log("Authorization Header:", req.header("Authorization")); 
         
         const authHeader = req.header("Authorization");
         if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -13,10 +13,10 @@ const authStudent = async (req, res, next) => {
         }
 
         const token = authHeader.replace("Bearer ", "");
-        console.log("Extracted Token:", token); // Debugging line
+        console.log("Extracted Token:", token); 
 
         const decodedtoken = jwt.verify(token, JWT_SECRET);
-        console.log("Decoded Token:", decodedtoken); // Debugging line
+        console.log("Decoded Token:", decodedtoken); 
 
         if (!decodedtoken || decodedtoken.role !== "student") {
             return res.status(403).json({ message: "Forbidden: Not a Student" });
@@ -30,7 +30,7 @@ const authStudent = async (req, res, next) => {
         req.student = student;
         next();
     } catch (error) {
-        console.error("JWT Verification Error:", error); // Debugging line
+        console.error("JWT Verification Error:", error); 
         res.status(401).json({ message: "Unauthorized: Invalid token" });
     }
 };
