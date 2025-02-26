@@ -5,12 +5,10 @@ import Analytics from '../components/studentpage/Analytics';
 import TestScores from '../components/studentpage/TestScores';
 import PendingAssignments from '../components/studentpage/PendingAssignment';
 import ProfileCard from '../components/studentpage/ProfileCard';
+import GrowthRate from '../components/Dashboardcomponents/overview/GrowthRate';
 function StudentPage() {
   return (
-    <div className="min-h-screen bg-[#f4f1ea] font-sans flex">
-      
-      {/* Sidebar */}
-      <Sidebar />
+    <div className="min-h-screen text-black bg-[#f4f1ea] font-sans flex">
 
       {/* Main Content */}
       <div className="flex flex-1 flex-col lg:flex-row gap-6 p-6 w-full max-w-7xl mx-auto">
@@ -28,10 +26,10 @@ function StudentPage() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-white rounded-xl p-6 cursor-pointer shadow-md transition-transform transform hover:scale-105">
-              <Analytics />
+            <div className="bg-white rounded-xl p-6 cursor-pointer  transition-transform transform hover:scale-105">
+              <GrowthRate bgColor="white"/>
             </div>
-            <div className="bg-white rounded-xl p-6 cursor-pointer shadow-md transition-transform transform hover:scale-105">
+            <div className="bg-white rounded-xl p-6 cursor-pointer  transition-transform transform hover:scale-105">
               
               <TestScores />
             </div>
@@ -39,7 +37,7 @@ function StudentPage() {
         </main>
 
         {/* Profile Card */}
-        <div className="hidden h-full cursor-pointer lg:block w-72 transition-transform transform hover:scale-105">
+        <div className="hidden h-96 cursor-pointer lg:block w-72 transition-transform transform hover:scale-105">
           <ProfileCard />
           
         </div>

@@ -6,7 +6,7 @@ import ClassPerformance from '../components/TeacherHome/ClassPerformance';
 
 const TeacherHomePage = () => {
   return (
-    <div className="min-h-screen bg-[#f4f1ea] font-sans flex">
+    <div className=" h-full w-full bg-gray-300 font-sans flex">
       {/* Sidebar */}
       <Sidebar className="w-20 bg-[#d39faa] p-4 flex flex-col items-center" />
 

@@ -6,8 +6,7 @@ import ResourceSection from '../components/NewsResourcesComponent/ResourceSectio
 import TogelSection from '../components/NewsResourcesComponent/TogelSection'
 const ResourcePage = () => {
   return (
-    <div className="flex h-screen bg-[#F5F5DD]">
-      <Sidebar />
+    <div className="flex h-screen w-full bg-gray-50">
       <div className="flex-1 p-6">
         <TogelSection />
         <SearchBar />

@@ -71,7 +71,7 @@ const AssignmentBot = () => {
   };
 
   return (
-    <div className="bg-[#f7f1e3] p-6 rounded-lg text-center border-2 border-dashed border-gray-400">
+    <div className="bg-gray-50 text-black p-6 rounded-lg text-center border-2 border-dashed border-gray-400">
       <h2 className="text-xl font-bold mb-4">AI ASSIGNMENT BOT</h2>
 
       <div
