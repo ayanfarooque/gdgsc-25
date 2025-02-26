@@ -5,9 +5,7 @@ import ProfileCard from "../components/StudentTestMarks/profileCard";
 
 const TestPage = () => {
   return (
-    <div className="flex h-screen w-full bg-gray-100">
-      {/* Sidebar */}
-      <Sidebar />
+    <div className="flex h-screen w-full text-black bg-gray-100">
 
       {/* Main Content */}
       <main className="flex-grow p-6">

@@ -6,7 +6,9 @@ import TestScores from '../components/studentpage/TestScores';
 import PendingAssignments from '../components/studentpage/PendingAssignment';
 import ProfileCard from '../components/studentpage/ProfileCard';
 import GrowthRate from '../components/Dashboardcomponents/overview/GrowthRate';
+import { useNavigate } from 'react-router-dom';
 function StudentPage() {
+  const navigate = useNavigate()
   return (
     <div className="min-h-screen text-black bg-[#f4f1ea] font-sans flex">
 
@@ -29,8 +31,7 @@ function StudentPage() {
             <div className="bg-white rounded-xl p-6 cursor-pointer  transition-transform transform hover:scale-105">
               <GrowthRate bgColor="white"/>
             </div>
-            <div className="bg-white rounded-xl p-6 cursor-pointer  transition-transform transform hover:scale-105">
-              
+            <div onClick={() => navigate('/test')} className="bg-white rounded-xl p-6 cursor-pointer  transition-transform transform hover:scale-105">
               <TestScores />
             </div>
           </div>

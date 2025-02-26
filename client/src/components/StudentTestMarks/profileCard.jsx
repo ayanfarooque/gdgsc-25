@@ -2,7 +2,7 @@ import profilePic from "../../assets/profile-avatar.png"
 import React from "react";
 const ProfileCard = () => {
   return (
-    <div className="bg-teal-700 w-80 h-150 p-4 rounded-lg text-white shadow-lg">
+    <div className="bg-gray-800 w-80 h-150 p-4 rounded-lg text-white shadow-lg">
       <div className="flex items-center justify-center">
         <img src={profilePic} alt="Profile" className="w-16 h-16 rounded-full border-2 border-white" />
       </div>
