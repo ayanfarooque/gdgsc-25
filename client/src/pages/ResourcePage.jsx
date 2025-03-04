@@ -1,4 +1,5 @@
 import React from 'react'
+<<<<<<< HEAD
 import SearchBar from '../components/NewsResourcesComponent/SearchBar'
 import Sidebar from '../components/studentpage/Sidebar';
 import Card from '../components/NewsResourcesComponent/Card'
@@ -21,6 +22,13 @@ const ResourcePage = () => {
           <ResourceSection />
         </div>
       </div>
+=======
+
+const ResourcePage = () => {
+  return (
+    <div>
+      
+>>>>>>> 29e5612a686e3cdef61b07d9f9f12a906accdcf9
     </div>
   )
 }

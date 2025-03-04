@@ -26,7 +26,11 @@ import {
     ];
   
     return (
+<<<<<<< HEAD
       <div className="bg-white rounded-xl p-6 ">
+=======
+      <div className="bg-white rounded-xl p-6 shadow-sm">
+>>>>>>> 29e5612a686e3cdef61b07d9f9f12a906accdcf9
         <h2 className="text-lg font-semibold mb-6">Analytics</h2>
         <div className="grid md:grid-cols-2 gap-8">
           <div className="h-[300px]">

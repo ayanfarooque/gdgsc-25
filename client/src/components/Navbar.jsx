@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useState, useRef, useEffect } from "react";
 import { FaUserCircle, FaChalkboardTeacher } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -61,3 +62,16 @@ const Navbar = () => {
 };
 
 export default Navbar;
+=======
+import React from 'react'
+
+const Navbar = () => {
+  return (
+    <div>
+      
+    </div>
+  )
+}
+
+export default Navbar
+>>>>>>> 29e5612a686e3cdef61b07d9f9f12a906accdcf9
