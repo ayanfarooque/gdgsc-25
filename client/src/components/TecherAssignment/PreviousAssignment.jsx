@@ -1,6 +1,7 @@
 import React from "react";
 
 const PreviousAssignment = () => {
+
   return (
     <div className="bg-white p-6 rounded-lg  w-1/2">
       <h2 className="text-xl font-bold mb-4 text-gray-800">Previous Assignments</h2>
@@ -17,3 +18,4 @@ const PreviousAssignment = () => {
 };
 
 export default PreviousAssignment;
+
