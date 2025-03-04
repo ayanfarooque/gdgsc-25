@@ -1,5 +1,4 @@
 import React from 'react'
-<<<<<<< HEAD
 import AssignmentBot from '../components/AssignmentComponent/AssignmentBot'
 import ReviewSection from '../components/AssignmentComponent/ReviewSection'
 import SubmittedAssignments from '../components/AssignmentComponent/SubmittedAssignments'
@@ -32,13 +31,6 @@ const AssignmentPage = () => {
           </div>
         </div>
       </div>
-=======
-
-const AssignmentPage = () => {
-  return (
-    <div>
-      
->>>>>>> 29e5612a686e3cdef61b07d9f9f12a906accdcf9
     </div>
   )
 }

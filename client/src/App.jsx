@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState } from 'react'
 import { Route, Routes } from 'react-router-dom';
 import StudentPage from './pages/StudentPage';
@@ -20,7 +19,7 @@ import TeachersOverview from './pages/TeacherPages/TeachersOverview';
 import Header from './pages/Dashboardpages/Header';
 const App = () => {
   const [selectedRole, setSelectedRole] = useState("");
-  const [role, setRole] = useState(""); 
+  const [role, setRole] = useState("teacher"); 
   const handleRoleSelection = (role) => {
     setSelectedRole(role);
     setRole(role)
@@ -58,23 +57,3 @@ const App = () => {
 }
 
 export default App;
-=======
-import React from 'react'
-import { Route, Routes } from 'react-router-dom';
-import AssignmentReview from './components/AssignmentReview';
-import StudentPage from './pages/StudentPage';
-import ChatPage from './pages/Chatpage';
-const App = () => {
-  return (
-    <div>
-      <Routes>
-      <Route path="/student-dashborad" element={<StudentPage />} />
-      <Route path='/chat-page' element={<ChatPage />} />
-        <Route path="/assignments" element={<AssignmentReview />} />
-      </Routes>
-    </div>
-  )
-}
-
-export default App
->>>>>>> 29e5612a686e3cdef61b07d9f9f12a906accdcf9
