@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'package:flutter/services.dart' show rootBundle;
 import '../../components/header.dart';
 import '../../components/footer.dart';
 import '../../components/news_card.dart';
+import 'package:http/http.dart' as http;
 
 class ResourceLanding extends StatefulWidget {
   @override
@@ -32,13 +32,19 @@ class _LandingPageState extends State<ResourceLanding> {
   }
 
   void _loadNews() async {
-    final String response =
-        await rootBundle.loadString('lib/assets/data/news.json');
-    final data = await json.decode(response);
-    setState(() {
-      _news = data;
-      _filteredNews = _news;
-    });
+    try {
+      final response =
+          await http.get(Uri.parse('http://10.0.0.5:5000/api/news/news'));
+      if (response.statusCode == 200) {
+        setState(() {
+          _news = json.decode(response.body);
+        });
+      } else {
+        throw Exception('Failed to load news');
+      }
+    } catch (e) {
+      print('Error fetching news: $e');
+    }
   }
 
   void _onSearchChanged() {

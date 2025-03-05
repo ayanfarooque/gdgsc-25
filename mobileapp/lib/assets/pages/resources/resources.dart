@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'package:flutter/services.dart' show rootBundle;
 import '../../components/header.dart';
 import '../../components/footer.dart';
 import '../../components/resourceCard.dart';
 import 'package:http/http.dart' as http;
-
 
 class ResourceLanding extends StatefulWidget {
   @override
@@ -14,7 +12,7 @@ class ResourceLanding extends StatefulWidget {
 
 class _LandingPageState extends State<ResourceLanding> {
   int _selectedIndex = 0;
-  List<dynamic> _resource = [];
+  List<dynamic> _resources = [];
   List<dynamic> _filteredresource = [];
   TextEditingController _searchController = TextEditingController();
   String _searchQuery = "";
@@ -22,7 +20,7 @@ class _LandingPageState extends State<ResourceLanding> {
   @override
   void initState() {
     super.initState();
-    _loadresource();
+    _loadResources();
     _searchController.addListener(_onSearchChanged);
   }
 
@@ -33,20 +31,26 @@ class _LandingPageState extends State<ResourceLanding> {
     super.dispose();
   }
 
-  void _loadresource() async {
-    final String response =
-        await rootBundle.loadString('lib/assets/data/resource.json');
-    final data = await json.decode(response);
-    setState(() {
-      _resource = data;
-      _filteredresource = _resource;
-    });
+  void _loadResources() async {
+    try {
+      final response = await http
+          .get(Uri.parse('http://10.0.0.5:5000/api/resources/resources'));
+      if (response.statusCode == 200) {
+        setState(() {
+          _resources = json.decode(response.body);
+        });
+      } else {
+        throw Exception('Failed to load resources');
+      }
+    } catch (e) {
+      print('Error fetching resources: $e');
+    }
   }
 
   void _onSearchChanged() {
     setState(() {
       _searchQuery = _searchController.text;
-      _filteredresource = _resource
+      _filteredresource = _resources
           .where((resource) => resource['resourceHeading']
               .toLowerCase()
               .contains(_searchQuery.toLowerCase()))
@@ -202,7 +206,7 @@ class _LandingPageState extends State<ResourceLanding> {
                               shadowColor: Colors.black,
                             ),
                             child: const Text(
-                              "resource",
+                              "News",
                               style: TextStyle(color: Colors.black),
                             ),
                           ),

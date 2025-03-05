@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'package:flutter/services.dart' show rootBundle;
+//import 'package:flutter/services.dart' show rootBundle;
 import '../../components/header.dart';
 import '../../components/footer.dart';
 import '../../components/news_card.dart';
 import '../../components/resourceCard.dart';
+import 'package:http/http.dart' as http;
 
 class ResourceLanding extends StatefulWidget {
   @override
@@ -38,23 +39,35 @@ class _LandingPageState extends State<ResourceLanding> {
   }
 
   void _loadNews() async {
-    final String response =
-        await rootBundle.loadString('lib/assets/data/news.json');
-    final data = await json.decode(response);
-    setState(() {
-      _news = data;
-      _filteredItems = _news;
-    });
+    try {
+      final response =
+          await http.get(Uri.parse('http://10.0.0.5:5000/api/news/news'));
+      if (response.statusCode == 200) {
+        setState(() {
+          _news = json.decode(response.body);
+        });
+      } else {
+        throw Exception('Failed to load news');
+      }
+    } catch (e) {
+      print('Error fetching news: $e');
+    }
   }
 
   void _loadResources() async {
-    final String response =
-        await rootBundle.loadString('lib/assets/data/resource.json');
-    final data = await json.decode(response);
-    setState(() {
-      _resources = data;
-      _filteredItems = _resources;
-    });
+    try {
+      final response = await http
+          .get(Uri.parse('http://10.0.0.5:5000/api/resources/resources'));
+      if (response.statusCode == 200) {
+        setState(() {
+          _resources = json.decode(response.body);
+        });
+      } else {
+        throw Exception('Failed to load resources');
+      }
+    } catch (e) {
+      print('Error fetching resources: $e');
+    }
   }
 
   void _onSearchChanged() {
