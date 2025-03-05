@@ -1,5 +1,4 @@
 const TestResult = require('../models/TestResult.js')
-
 exports.getAllTestScores = async (req, res) => {
     try {
         const testScores = await TestResult.find()
