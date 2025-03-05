@@ -4,6 +4,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:intl/intl.dart';
 import '../components/header.dart';
 import '../components/footer.dart';
+import 'package:http/http.dart' as http;
 
 class ViewNotifications extends StatefulWidget {
   final String studentId;
@@ -25,16 +26,58 @@ class _NotificationPageState extends State<ViewNotifications> {
   }
 
   void _loadNotifications() async {
-    final String response =
-        await rootBundle.loadString('lib/assets/data/notification.json');
-    final data = await json.decode(response);
-    setState(() {
-      _notifications = data
-          .where(
-              (notification) => notification['studentId'] == widget.studentId)
-          .toList();
-    });
+    final String apiUrl = "http://10.0.0.5:5000/api/notify/all-notifications";
+
+    try {
+      final response = await http.get(Uri.parse(apiUrl));
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = json.decode(response.body);
+
+        if (responseData["success"]) {
+          setState(() {
+            _notifications = responseData["notifications"];
+          });
+        } else {
+          print("Error: ${responseData['message']}");
+        }
+      } else {
+        print("Failed to load notifications: ${response.statusCode}");
+      }
+    } catch (e) {
+      print("Error fetching notifications: $e");
+    }
   }
+
+  // Future<void> createNotification(String content) async {
+  //   final String apiUrl = "http://10.0.0.5:5000/api/notify/create-notification";
+  //   final response = await http.post(
+  //     Uri.parse(apiUrl),
+  //     headers: {"Content-Type": "application/json"},
+  //     body: jsonEncode({
+  //       "studentId": widget.studentId,
+  //       "content": content,
+  //     }),
+  //   );
+
+  //   if (response.statusCode == 201) {
+  //     _loadNotifications(); // Refresh list after adding
+  //   } else {
+  //     print("Failed to create notification");
+  //   }
+  // }
+
+  // Future<void> deleteNotification(String notificationId) async {
+  //   final String apiUrl =
+  //       "http://10.0.0.5:5000/api/notify/delete/$notificationId";
+  //   final response = await http.delete(Uri.parse(apiUrl));
+
+  //   if (response.statusCode == 200) {
+  //     _loadNotifications(); // Refresh list after deletion
+  //   } else {
+  //     print("Failed to delete notification");
+  //   }
+  // }
 
   void _onItemTapped(int index) {
     setState(() {
