@@ -4,8 +4,11 @@ const Teacher = require('../models/Teacher.js')
 
 exports.getTestScore = async (req,res) => {
     try {
-        const studentId = req.params.studentId;
+        const { studentId } = req.params; // Ensure studentId is correctly extracted
 
+        if (!studentId) {
+            return res.status(400).json({ message: "Student ID is required" });
+        }
         const testScores =  await TestResult.find({studentId})
             .populate("studentId", "name studentId class")  
             .populate("subjectId", "subjectName")           
