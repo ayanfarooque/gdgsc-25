@@ -4,6 +4,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import '../../components/header.dart';
 import '../../components/footer.dart';
 import '../../components/news_card.dart';
+import '../../components/resourceCard.dart';
 
 class ResourceLanding extends StatefulWidget {
   @override
@@ -13,15 +14,19 @@ class ResourceLanding extends StatefulWidget {
 class _LandingPageState extends State<ResourceLanding> {
   int _selectedIndex = 0;
   List<dynamic> _news = [];
-  List<dynamic> _filteredNews = [];
+  List<dynamic> _resources = [];
+  List<dynamic> _filteredItems = [];
   TextEditingController _searchController = TextEditingController();
   String _searchQuery = "";
   bool _showRecommended = true;
+  bool _showResources = false;
+  bool _showNews = false;
 
   @override
   void initState() {
     super.initState();
     _loadNews();
+    _loadResources();
     _searchController.addListener(_onSearchChanged);
   }
 
@@ -38,18 +43,45 @@ class _LandingPageState extends State<ResourceLanding> {
     final data = await json.decode(response);
     setState(() {
       _news = data;
-      _filteredNews = _news;
+      _filteredItems = _news;
+    });
+  }
+
+  void _loadResources() async {
+    final String response =
+        await rootBundle.loadString('lib/assets/data/resource.json');
+    final data = await json.decode(response);
+    setState(() {
+      _resources = data;
+      _filteredItems = _resources;
     });
   }
 
   void _onSearchChanged() {
     setState(() {
       _searchQuery = _searchController.text;
-      _filteredNews = _news
-          .where((news) => news['newsHeading']
+      if (_showResources) {
+        _filteredItems = _resources
+            .where((resource) => resource['resourcesHeading']
+                .toLowerCase()
+                .contains(_searchQuery.toLowerCase()))
+            .toList();
+      } else if (_showNews) {
+        _filteredItems = _news
+            .where((news) => news['newsHeading']
+                .toLowerCase()
+                .contains(_searchQuery.toLowerCase()))
+            .toList();
+      } else {
+        _filteredItems = [
+          ..._news.where((news) => news['newsHeading']
+              .toLowerCase()
+              .contains(_searchQuery.toLowerCase())),
+          ..._resources.where((resource) => resource['resourcesHeading']
               .toLowerCase()
               .contains(_searchQuery.toLowerCase()))
-          .toList();
+        ];
+      }
     });
   }
 
@@ -81,14 +113,30 @@ class _LandingPageState extends State<ResourceLanding> {
   void _showRecommendedCards() {
     setState(() {
       _showRecommended = true;
-      _filteredNews = _news.where((news) => news['stared'] == true).toList();
+      _showResources = false;
+      _showNews = false;
+      _filteredItems = [
+        ..._news.where((news) => news['stared'] == true),
+        ..._resources.where((resource) => resource['stared'] == true)
+      ];
     });
   }
 
   void _showAllResources() {
     setState(() {
       _showRecommended = false;
-      _filteredNews = _news;
+      _showResources = true;
+      _showNews = false;
+      _filteredItems = _resources;
+    });
+  }
+
+  void _showAllNews() {
+    setState(() {
+      _showRecommended = false;
+      _showResources = false;
+      _showNews = true;
+      _filteredItems = _news;
     });
   }
 
@@ -207,7 +255,7 @@ class _LandingPageState extends State<ResourceLanding> {
                                   ),
                                 ),
                           const SizedBox(width: 8.9),
-                          !_showRecommended
+                          _showResources
                               ? ElevatedButton(
                                   onPressed: _showAllResources,
                                   style: ElevatedButton.styleFrom(
@@ -233,29 +281,43 @@ class _LandingPageState extends State<ResourceLanding> {
                                   ),
                                 ),
                           const SizedBox(width: 8.8),
-                          OutlinedButton(
-                            onPressed: () {},
-                            style: OutlinedButton.styleFrom(
-                              side: BorderSide(color: const Color(0xFF49ABB0)),
-                            ),
-                            child: const Text(
-                              "News",
-                              style: TextStyle(color: const Color(0xFF49ABB0)),
-                            ),
-                          ),
+                          _showNews
+                              ? ElevatedButton(
+                                  onPressed: _showAllNews,
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: const Color(0xFF49ABB0),
+                                    elevation: 2,
+                                    shadowColor: Colors.black,
+                                  ),
+                                  child: const Text(
+                                    "News",
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                )
+                              : OutlinedButton(
+                                  onPressed: _showAllNews,
+                                  style: OutlinedButton.styleFrom(
+                                    side: BorderSide(
+                                        color: const Color(0xFF49ABB0)),
+                                  ),
+                                  child: const Text(
+                                    "News",
+                                    style: TextStyle(
+                                        color: const Color(0xFF49ABB0)),
+                                  ),
+                                ),
                         ],
                       ),
                     ),
                     const SizedBox(height: 10),
-                    if (_showRecommended)
-                      ..._filteredNews
-                          .where((news) => news['stared'] == true)
-                          .map((news) => NewsCard(news: news))
-                          .toList()
-                    else
-                      ..._filteredNews
-                          .map((news) => NewsCard(news: news))
-                          .toList(),
+                    ..._filteredItems.map((item) {
+                      if (item.containsKey('newsId')) {
+                        return NewsCard(news: item);
+                      } else if (item.containsKey('resourcesId')) {
+                        return ResourceCard(resource: item);
+                      }
+                      return Container();
+                    }).toList(),
                   ],
                 ),
               ),

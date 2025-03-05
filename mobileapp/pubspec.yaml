@@ -41,6 +41,8 @@ flutter:
     - lib/assets/data/notification.json
     - lib/assets/data/students.json
     - lib/assets/data/doubtChat.json
+    - lib/assets/data/resource.json
+    - lib/assets/images/default.jpg
 
   fonts:
     - family: CustomFont
