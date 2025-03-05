@@ -10,6 +10,7 @@ const subjectRoutes = require('./routes/subjectRoutes.js');
 const testResultRoutes = require('./routes/testResultRoutes.js')
 const notificationRoutes = require('./routes/notificationsRoutes.js')
 const newsRoute = require('./routes/newsRoute.js')
+const resourceRoutes = require('./routes/resourceRoutes.js')
 require("dotenv").config();
 console.log("JWT_SECRET:", process.env.JWT_SECRET);
 connectDB();
@@ -33,6 +34,7 @@ app.use("/api/subjects", subjectRoutes);
 app.use('/api/test-scores',testResultRoutes);
 app.use('/api/news',newsRoute)
 app.use('/api/notify',notificationRoutes)
+app.use('/api/resources',resourceRoutes)
 app.use((req, res, next) => {
     res.status(404).json({ message: 'Route not found' });
 });
