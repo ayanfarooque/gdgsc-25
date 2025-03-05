@@ -1,11 +1,12 @@
-const TestResult = require('../models/TestResult.js')
+const TestResult = require("../models/TestResult.js");
+
 exports.getAllTestScores = async (req, res) => {
     try {
         const testScores = await TestResult.find()
             .populate("studentId", "name studentId class")
             .populate("subjectId", "subjectName")
             .populate("testId", "testName")
-            .sort({ CreatedAt: -1 });
+            .sort({ createdAt: -1 }); // Ensure field name matches your schema
 
         if (!testScores || testScores.length === 0) {
             return res.status(404).json({ message: "No test scores found" });

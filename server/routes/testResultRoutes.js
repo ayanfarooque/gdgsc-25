@@ -1,10 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { getAllTestScores } = require("../controllers/testResultController"); // Ensure this import is correct
-
-if (!getAllTestScores) {
-  throw new Error("getTestResults function is not defined or incorrectly imported.");
-}
+const { getAllTestScores } = require("../controllers/testResultController"); // Ensure correct function name
 
 router.get("/test-results", getAllTestScores);
 
