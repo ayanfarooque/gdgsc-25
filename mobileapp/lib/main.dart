@@ -7,6 +7,7 @@ import './assets/pages/community/landing.dart';
 import './assets/pages/score.dart';
 import './assets/pages/profile.dart';
 import './assets/pages/notification.dart';
+import './assets/pages/sisu.dart';
 
 void main() {
   runApp(const MyApp());
@@ -37,9 +38,10 @@ class MyApp extends StatelessWidget {
               fontWeight: FontWeight.w100),
         ),
       ),
-      initialRoute: '/',
+      initialRoute: '/auth',
       routes: {
         '/': (context) => const HomePage(),
+        '/auth': (context) => const AuthPage(),
         '/assignment': (context) => AssignmentLanding(),
         '/aibot': (context) => AiLanding(),
         '/resources': (context) => ResourceLanding(),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:intl/intl.dart';
 import '../components/header.dart';
 import '../components/footer.dart';
+import 'package:http/http.dart' as http;
 
 class ViewScores extends StatefulWidget {
   @override
@@ -22,21 +22,30 @@ class _ScorePageState extends State<ViewScores> {
   }
 
   void _loadScores() async {
-    final String response =
-        await rootBundle.loadString('lib/assets/data/scores.json');
-    final data = await json.decode(response);
-    setState(() {
-      _scores = data;
-      _subjectScores = {};
-      for (var score in _scores) {
-        String subjectName = score['subjectName'];
-        if (_subjectScores.containsKey(subjectName)) {
-          _subjectScores[subjectName]!.add(score);
-        } else {
-          _subjectScores[subjectName] = [score];
-        }
+    try {
+      final response = await http
+          .get(Uri.parse("http://localhost:5000/api/test-scores/test-results"));
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(response.body);
+        setState(() {
+          _scores = data;
+          _subjectScores = {};
+          for (var score in _scores) {
+            String subjectName = score['subjectId']['subjectName'];
+            if (_subjectScores.containsKey(subjectName)) {
+              _subjectScores[subjectName]!.add(score);
+            } else {
+              _subjectScores[subjectName] = [score];
+            }
+          }
+        });
+      } else {
+        print("Failed to load scores: ${response.statusCode}");
       }
-    });
+    } catch (e) {
+      print("Error fetching scores: $e");
+    }
   }
 
   void _onItemTapped(int index) {
