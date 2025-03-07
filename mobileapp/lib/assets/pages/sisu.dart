@@ -120,37 +120,64 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
   }) async {
     final url = Uri.parse('http://192.168.0.104:5000/api/students/register');
 
+    // Log the request data for debugging
+    final requestData = {
+      "name": name,
+      "addressline1": addressLine1,
+      "addressline2": addressLine2,
+      "city": city,
+      "state": state,
+      "postalCode": postalCode,
+      "enrollmentId": enrollmentId,
+      "dob": dob,
+      "email": email,
+      "password": password,
+    };
+    print("Sending registration data: $requestData");
+
     try {
       final response = await http.post(
         url,
         headers: {"Content-Type": "application/json"},
-        body: jsonEncode({
-          "name": name,
-          "addressline1": addressLine1,
-          "addressline2": addressLine2,
-          "city": city,
-          "state": state,
-          "postalCode": postalCode,
-          "enrollmentId": enrollmentId,
-          "dob": dob,
-          "email": email,
-          "password": password,
-        }),
+        body: jsonEncode(requestData),
       );
 
-      final responseData = jsonDecode(response.body);
+      print("Registration response status: ${response.statusCode}");
+      print("Registration response body: ${response.body}");
 
-      if (response.statusCode == 201) {
-        String token = responseData["token"];
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        // Accept either 201 Created or 200 OK
+        try {
+          final responseData = jsonDecode(response.body);
 
-        // Save token in SharedPreferences
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        await prefs.setString('auth_token', token);
+          // Check if token exists in the response
+          if (responseData.containsKey("token")) {
+            String token = responseData["token"];
 
-        print("Student Registered Successfully!");
-        return true; // Return success
+            // Save token in SharedPreferences
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            await prefs.setString('auth_token', token);
+
+            print("Student Registered Successfully! Token: $token");
+            return true; // Return success
+          } else {
+            // Successfully registered but no token in response
+            print("Registration successful but no token returned");
+            return true;
+          }
+        } catch (e) {
+          print("Error parsing response: $e");
+          return false;
+        }
       } else {
-        print("Error: ${responseData['message']}");
+        // Try to parse the error message if possible
+        try {
+          final responseData = jsonDecode(response.body);
+          print(
+              "Registration error: ${responseData['message'] ?? 'Unknown error'}");
+        } catch (e) {
+          print("Registration failed with status ${response.statusCode}");
+        }
         return false; // Return failure
       }
     } catch (error) {
@@ -193,7 +220,6 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
       if (isLogin) {
         // Call the login function when in login mode
         studentLogin(_emailController.text, _passwordController.text).then((_) {
-          
           getToken().then((token) {
             if (token != null) {
               Navigator.pushReplacementNamed(context, '/');
