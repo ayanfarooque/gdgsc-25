@@ -106,6 +106,59 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
     }
   }
 
+  Future<bool> registerStudent({
+    required String name,
+    required String addressLine1,
+    required String addressLine2,
+    required String city,
+    required String state,
+    required String postalCode,
+    required String enrollmentId,
+    required String dob,
+    required String email,
+    required String password,
+  }) async {
+    final url = Uri.parse('http://192.168.0.104:5000/api/students/register');
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({
+          "name": name,
+          "addressline1": addressLine1,
+          "addressline2": addressLine2,
+          "city": city,
+          "state": state,
+          "postalCode": postalCode,
+          "enrollmentId": enrollmentId,
+          "dob": dob,
+          "email": email,
+          "password": password,
+        }),
+      );
+
+      final responseData = jsonDecode(response.body);
+
+      if (response.statusCode == 201) {
+        String token = responseData["token"];
+
+        // Save token in SharedPreferences
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('auth_token', token);
+
+        print("Student Registered Successfully!");
+        return true; // Return success
+      } else {
+        print("Error: ${responseData['message']}");
+        return false; // Return failure
+      }
+    } catch (error) {
+      print("Failed to register: $error");
+      return false; // Return failure on exception
+    }
+  }
+
   Future<String?> getToken() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString('auth_token');
@@ -140,10 +193,9 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
       if (isLogin) {
         // Call the login function when in login mode
         studentLogin(_emailController.text, _passwordController.text).then((_) {
-          // Check if login was successful
+          
           getToken().then((token) {
             if (token != null) {
-              // Login successful, navigate to home
               Navigator.pushReplacementNamed(context, '/');
             } else {
               // Login failed, show error
@@ -157,10 +209,52 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
           });
         });
       } else {
-        // Handle signup logic here
-        // For now, just navigate to home after a delay
-        Future.delayed(const Duration(seconds: 2), () {
-          Navigator.pushReplacementNamed(context, '/');
+        // Handle registration
+        if (_selectedDate == null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Please select your date of birth'),
+              backgroundColor: Colors.red,
+            ),
+          );
+          return;
+        }
+
+        // Format date in the required format (YYYY-MM-DD)
+        final formattedDob =
+            "${_selectedDate!.year}-${_selectedDate!.month.toString().padLeft(2, '0')}-${_selectedDate!.day.toString().padLeft(2, '0')}";
+
+        registerStudent(
+          name: _nameController.text,
+          addressLine1: _addressLine1Controller.text,
+          addressLine2: _addressLine2Controller.text,
+          city: _cityController.text,
+          state: _stateController.text,
+          postalCode: _postalCodeController.text,
+          enrollmentId: _enrollmentIdController.text,
+          dob: formattedDob,
+          email: _emailController.text,
+          password: _passwordController.text,
+        ).then((success) {
+          if (success) {
+            // Registration successful
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Registration successful!'),
+                backgroundColor: Colors.green,
+              ),
+            );
+            // Navigate to home page
+            Navigator.pushReplacementNamed(context, '/');
+          } else {
+            // Registration failed
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Registration failed. Please try again.'),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
         });
       }
     }
@@ -497,7 +591,6 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
                   'Postal Code',
                   Icons.markunread_mailbox,
                 ),
-                keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter your postal code';
