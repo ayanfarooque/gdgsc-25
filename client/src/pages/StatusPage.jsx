@@ -15,11 +15,9 @@ const StatusPage = () => {
           <Stats />
         </div>
 
-<<<<<<< HEAD
+
         {/* Right Section  */}
-=======
-        {/* Right Section (Assignments) */}
->>>>>>> 2c47c35 (Status page added)
+
         <div className="flex flex-col w-[30%] gap-6">
           <div className="bg-[#E195AB] p-4 rounded-lg shadow-md">
             <ActiveAssignment />
