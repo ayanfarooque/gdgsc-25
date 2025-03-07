@@ -1,9 +1,10 @@
 const express = require('express')
 const router = express.Router()
 
-const {createNews,getnewsbyID,updateNews,deleteNews,getAllNews} = require('../controllers/newsController')
+const {createNews,getResource,updateResources,deleteResources,getAllNews} = require('../controllers/newsController')
 
 router.post('/create-news',createNews)
+
 router.get('/news',getAllNews)
 router.get('/news/:newsId',getnewsbyID)
 router.put('/news/:newsId',updateNews)

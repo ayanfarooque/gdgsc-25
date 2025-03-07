@@ -7,7 +7,8 @@ const newsSchema = new mongoose.Schema({
     newsHeading: { type: String, required: true },
     newsContent: { type: String, required: true },
     newsImage: {type: String, required: true},
-    stared: { type: Boolean, default: false }
+    stared: { type: Boolean, default: false },
+    detailedContent: {type: String, required: true}
 }, { timestamps: true });
 
 module.exports = mongoose.model("News", newsSchema);
