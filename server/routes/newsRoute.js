@@ -10,4 +10,5 @@ router.get('/news',getAllNews)
 //router.put('/news/:newsId',updateNews)
 //router.delete('/news/:newsId',deleteNews)
 
+
 module.exports = router;
