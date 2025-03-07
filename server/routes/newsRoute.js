@@ -6,8 +6,8 @@ const {createNews,getResource,updateResources,deleteResources,getAllNews} = requ
 router.post('/create-news',createNews)
 
 router.get('/news',getAllNews)
-router.get('/news/:newsId',getnewsbyID)
-router.put('/news/:newsId',updateNews)
-router.delete('/news/:newsId',deleteNews)
+// router.get('/news/:newsId',getnewsbyID)
+// router.put('/news/:newsId',updateNews)
+// router.delete('/news/:newsId',deleteNews)
 
 module.exports = router;
