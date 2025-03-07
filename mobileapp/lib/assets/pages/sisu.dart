@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({Key? key}) : super(key: key);
@@ -75,6 +78,48 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  Future<void> studentLogin(String email, String password) async {
+    final url = Uri.parse(
+        "http://192.168.0.104:5000/api/students/login"); // Replace with your backend URL
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({"email": email, "password": password}),
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final token = data['token'];
+
+        // Save token in local storage
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('auth_token', token);
+
+        print("Login successful. Token saved.");
+      } else {
+        print("Login failed: ${jsonDecode(response.body)['message']}");
+      }
+    } catch (error) {
+      print("Error: $error");
+    }
+  }
+
+  Future<String?> getToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('auth_token');
+  }
+
+  void checkToken() async {
+    String? token = await getToken();
+    if (token != null) {
+      print("Stored Token: $token");
+    } else {
+      print("No token found");
+    }
+  }
+
   void _toggleAuthMode() {
     setState(() {
       isLogin = !isLogin;
@@ -85,7 +130,6 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
 
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
-      // Animate button press
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(isLogin ? 'Logging in...' : 'Signing up...'),
@@ -93,11 +137,32 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
         ),
       );
 
-      // In real app, perform authentication here
-      // For demo, navigate to home after short delay
-      Future.delayed(const Duration(seconds: 2), () {
-        Navigator.pushReplacementNamed(context, '/');
-      });
+      if (isLogin) {
+        // Call the login function when in login mode
+        studentLogin(_emailController.text, _passwordController.text).then((_) {
+          // Check if login was successful
+          getToken().then((token) {
+            if (token != null) {
+              // Login successful, navigate to home
+              Navigator.pushReplacementNamed(context, '/');
+            } else {
+              // Login failed, show error
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Login failed. Please check your credentials.'),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            }
+          });
+        });
+      } else {
+        // Handle signup logic here
+        // For now, just navigate to home after a delay
+        Future.delayed(const Duration(seconds: 2), () {
+          Navigator.pushReplacementNamed(context, '/');
+        });
+      }
     }
   }
 
@@ -142,7 +207,7 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
                         style: TextStyle(
                           fontSize: 32,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: Colors.black,
                           letterSpacing: 2,
                           shadows: [
                             Shadow(
@@ -160,7 +225,7 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
                         isLogin ? 'Welcome Back!' : 'Create Account',
                         style: const TextStyle(
                           fontSize: 20,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ),
 
@@ -466,6 +531,7 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
                     child: Text(
                       isLogin ? 'LOGIN' : 'SIGN UP',
                       style: const TextStyle(
+                        color: const Color.fromARGB(255, 245, 245, 221),
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 1,

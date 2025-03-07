@@ -34,7 +34,7 @@ class _LandingPageState extends State<ResourceLanding> {
   void _loadNews() async {
     try {
       final response =
-          await http.get(Uri.parse('http://10.0.0.5:5000/api/news/news'));
+          await http.get(Uri.parse('http://192.168.0.104:5000/api/news/news'));
       if (response.statusCode == 200) {
         setState(() {
           _news = json.decode(response.body);

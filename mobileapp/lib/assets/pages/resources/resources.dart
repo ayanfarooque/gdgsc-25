@@ -34,7 +34,7 @@ class _LandingPageState extends State<ResourceLanding> {
   void _loadResources() async {
     try {
       final response = await http
-          .get(Uri.parse('http://10.0.0.5:5000/api/resources/resources'));
+          .get(Uri.parse('http://192.168.0.104:5000/api/resources/resources'));
       if (response.statusCode == 200) {
         setState(() {
           _resources = json.decode(response.body);

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
-//import 'package:flutter/services.dart' show rootBundle;
 import '../../components/header.dart';
 import '../../components/footer.dart';
 import '../../components/news_card.dart';
@@ -41,10 +40,11 @@ class _LandingPageState extends State<ResourceLanding> {
   void _loadNews() async {
     try {
       final response =
-          await http.get(Uri.parse('http://10.0.0.5:5000/api/news/news'));
+          await http.get(Uri.parse('http://192.168.0.104:5000/api/news/news'));
       if (response.statusCode == 200) {
         setState(() {
           _news = json.decode(response.body);
+          _updateFilteredItems();
         });
       } else {
         throw Exception('Failed to load news');
@@ -57,16 +57,30 @@ class _LandingPageState extends State<ResourceLanding> {
   void _loadResources() async {
     try {
       final response = await http
-          .get(Uri.parse('http://10.0.0.5:5000/api/resources/resources'));
+          .get(Uri.parse('http://192.168.0.104:5000/api/resources/resources'));
       if (response.statusCode == 200) {
         setState(() {
           _resources = json.decode(response.body);
+          _updateFilteredItems();
         });
       } else {
         throw Exception('Failed to load resources');
       }
     } catch (e) {
       print('Error fetching resources: $e');
+    }
+  }
+
+  void _updateFilteredItems() {
+    if (_showRecommended) {
+      _filteredItems = [
+        ..._news.where((news) => news['stared'] == true),
+        ..._resources.where((resource) => resource['stared'] == true)
+      ];
+    } else if (_showResources) {
+      _filteredItems = _resources;
+    } else if (_showNews) {
+      _filteredItems = _news;
     }
   }
 
@@ -128,10 +142,7 @@ class _LandingPageState extends State<ResourceLanding> {
       _showRecommended = true;
       _showResources = false;
       _showNews = false;
-      _filteredItems = [
-        ..._news.where((news) => news['stared'] == true),
-        ..._resources.where((resource) => resource['stared'] == true)
-      ];
+      _updateFilteredItems();
     });
   }
 
@@ -140,7 +151,7 @@ class _LandingPageState extends State<ResourceLanding> {
       _showRecommended = false;
       _showResources = true;
       _showNews = false;
-      _filteredItems = _resources;
+      _updateFilteredItems();
     });
   }
 
@@ -149,7 +160,7 @@ class _LandingPageState extends State<ResourceLanding> {
       _showRecommended = false;
       _showResources = false;
       _showNews = true;
-      _filteredItems = _news;
+      _updateFilteredItems();
     });
   }
 

@@ -26,7 +26,8 @@ class _NotificationPageState extends State<ViewNotifications> {
   }
 
   void _loadNotifications() async {
-    final String apiUrl = "http://10.0.0.5:5000/api/notify/all-notifications";
+    final String apiUrl =
+        "http://192.168.0.104:5000/api/notify/all-notifications";
 
     try {
       final response = await http.get(Uri.parse(apiUrl));

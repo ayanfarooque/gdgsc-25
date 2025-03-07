@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
           const Color.fromARGB(255, 73, 171, 176), // Background color
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(4.0),
+          padding: const EdgeInsets.all(0.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

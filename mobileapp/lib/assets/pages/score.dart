@@ -25,7 +25,7 @@ class _ScorePageState extends State<ViewScores> {
   void _loadScores() async {
     try {
       final response = await http.get(
-        Uri.parse("http://10.0.0.5:5000/api/test-scores/test-results"),
+        Uri.parse("http://192.168.0.104:5000/api/test-scores/test-results"),
       );
 
       print("Response Status: ${response.statusCode}");
