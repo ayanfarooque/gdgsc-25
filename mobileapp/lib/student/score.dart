@@ -111,7 +111,7 @@ class _ScorePageState extends State<ViewScores> {
                   onNotificationTap: () {
                     Navigator.pushNamed(context, '/notifications');
                   },
-                  profileImage: 'assets/images/image3.png',
+                  profileImage: 'images/image3.png',
                   welcomeText: "WELCOME HASHIM",
                 ),
               ),

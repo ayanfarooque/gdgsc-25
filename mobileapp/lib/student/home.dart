@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
 
   void _loadAssignments() async {
     final String response =
-        await rootBundle.loadString('lib/assets/data/assignment.json');
+        await rootBundle.loadString('lib/data/assignment.json');
     final data = await json.decode(response);
     setState(() {
       _assignments = data;
@@ -86,7 +86,7 @@ class _HomePageState extends State<HomePage> {
                   onNotificationTap: () {
                     Navigator.pushNamed(context, '/notifications');
                   },
-                  profileImage: 'lib/assets/images/image3.png',
+                  profileImage: 'lib/images/image3.png',
                   welcomeText: "WELCOME HASHIM",
                 ),
               ),

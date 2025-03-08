@@ -4,14 +4,15 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-class AuthPage extends StatefulWidget {
-  const AuthPage({Key? key}) : super(key: key);
+class TeacherAuthPage extends StatefulWidget {
+  const TeacherAuthPage({Key? key}) : super(key: key);
 
   @override
-  State<AuthPage> createState() => _AuthPageState();
+  State<TeacherAuthPage> createState() => _TeacherAuthPageState();
 }
 
-class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
+class _TeacherAuthPageState extends State<TeacherAuthPage>
+    with TickerProviderStateMixin {
   bool isLogin = true;
   late AnimationController _animationController;
   late Animation<double> _formAnimation;
@@ -22,12 +23,15 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _enrollmentIdController = TextEditingController();
+  final TextEditingController _employeeIdController = TextEditingController();
   final TextEditingController _addressLine1Controller = TextEditingController();
   final TextEditingController _addressLine2Controller = TextEditingController();
   final TextEditingController _cityController = TextEditingController();
   final TextEditingController _stateController = TextEditingController();
   final TextEditingController _postalCodeController = TextEditingController();
+  final TextEditingController _subjectController = TextEditingController();
+  final TextEditingController _qualificationController =
+      TextEditingController();
   DateTime? _selectedDate;
 
   @override
@@ -69,18 +73,20 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
     _emailController.dispose();
     _passwordController.dispose();
     _nameController.dispose();
-    _enrollmentIdController.dispose();
+    _employeeIdController.dispose();
     _addressLine1Controller.dispose();
     _addressLine2Controller.dispose();
     _cityController.dispose();
     _stateController.dispose();
     _postalCodeController.dispose();
+    _subjectController.dispose();
+    _qualificationController.dispose();
     super.dispose();
   }
 
-  Future<void> studentLogin(String email, String password) async {
+  Future<void> teacherLogin(String email, String password) async {
     final url = Uri.parse(
-        "http://192.168.0.104:5000/api/students/login"); // Replace with your backend URL
+        "http://192.168.0.104:5000/api/teachers/login"); // Replace with your backend URL
 
     try {
       final response = await http.post(
@@ -96,6 +102,7 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
         // Save token in local storage
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('auth_token', token);
+        await prefs.setString('user_role', 'teacher');
 
         print("Login successful. Token saved.");
       } else {
@@ -106,19 +113,21 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
     }
   }
 
-  Future<bool> registerStudent({
+  Future<bool> registerTeacher({
     required String name,
     required String addressLine1,
     required String addressLine2,
     required String city,
     required String state,
     required String postalCode,
-    required String enrollmentId,
+    required String employeeId,
     required String dob,
     required String email,
     required String password,
+    required String subject,
+    required String qualification,
   }) async {
-    final url = Uri.parse('http://192.168.0.104:5000/api/students/register');
+    final url = Uri.parse('http://192.168.0.104:5000/api/teachers/register');
 
     // Log the request data for debugging
     final requestData = {
@@ -128,10 +137,12 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
       "city": city,
       "state": state,
       "postalCode": postalCode,
-      "enrollmentId": enrollmentId,
+      "employeeId": employeeId,
       "dob": dob,
       "email": email,
       "password": password,
+      "subject": subject,
+      "qualification": qualification,
     };
     print("Sending registration data: $requestData");
 
@@ -157,8 +168,9 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
             // Save token in SharedPreferences
             SharedPreferences prefs = await SharedPreferences.getInstance();
             await prefs.setString('auth_token', token);
+            await prefs.setString('user_role', 'teacher');
 
-            print("Student Registered Successfully! Token: $token");
+            print("Teacher Registered Successfully! Token: $token");
             return true; // Return success
           } else {
             // Successfully registered but no token in response
@@ -213,16 +225,16 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(isLogin ? 'Logging in...' : 'Signing up...'),
-          backgroundColor: const Color(0xFF49ABB0),
+          backgroundColor: const Color(0xFFE195AB),
         ),
       );
 
       if (isLogin) {
         // Call the login function when in login mode
-        studentLogin(_emailController.text, _passwordController.text).then((_) {
+        teacherLogin(_emailController.text, _passwordController.text).then((_) {
           getToken().then((token) {
             if (token != null) {
-              Navigator.pushReplacementNamed(context, '/');
+              Navigator.pushReplacementNamed(context, '/teacher');
             } else {
               // Login failed, show error
               ScaffoldMessenger.of(context).showSnackBar(
@@ -250,17 +262,19 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
         final formattedDob =
             "${_selectedDate!.year}-${_selectedDate!.month.toString().padLeft(2, '0')}-${_selectedDate!.day.toString().padLeft(2, '0')}";
 
-        registerStudent(
+        registerTeacher(
           name: _nameController.text,
           addressLine1: _addressLine1Controller.text,
           addressLine2: _addressLine2Controller.text,
           city: _cityController.text,
           state: _stateController.text,
           postalCode: _postalCodeController.text,
-          enrollmentId: _enrollmentIdController.text,
+          employeeId: _employeeIdController.text,
           dob: formattedDob,
           email: _emailController.text,
           password: _passwordController.text,
+          subject: _subjectController.text,
+          qualification: _qualificationController.text,
         ).then((success) {
           if (success) {
             // Registration successful
@@ -270,8 +284,8 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
                 backgroundColor: Colors.green,
               ),
             );
-            // Navigate to home page
-            Navigator.pushReplacementNamed(context, '/');
+            // Navigate to teacher home page
+            Navigator.pushReplacementNamed(context, '/teacher');
           } else {
             // Registration failed
             ScaffoldMessenger.of(context).showSnackBar(
@@ -289,13 +303,13 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF49ABB0),
+      backgroundColor: const Color(0xFFE195AB), // Teacher color theme
       body: Stack(
         children: [
           // Background decoration
           Positioned.fill(
             child: CustomPaint(
-              painter: BackgroundPainter(),
+              painter: TeacherBackgroundPainter(),
             ),
           ),
 
@@ -342,7 +356,7 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
                       const SizedBox(height: 10),
 
                       Text(
-                        isLogin ? 'Welcome Back!' : 'Create Account',
+                        isLogin ? 'Teacher Login' : 'Register as Teacher',
                         style: const TextStyle(
                           fontSize: 20,
                           color: Colors.black,
@@ -425,17 +439,53 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
 
             if (!isLogin) const SizedBox(height: 15),
 
-            // Add Enrollment ID field
+            // Add Employee ID field
             if (!isLogin)
               TextFormField(
-                controller: _enrollmentIdController,
+                controller: _employeeIdController,
                 decoration: _inputDecoration(
-                  'Enrollment ID',
+                  'Employee ID',
                   Icons.badge,
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter your enrollment ID';
+                    return 'Please enter your employee ID';
+                  }
+                  return null;
+                },
+              ),
+
+            if (!isLogin) const SizedBox(height: 15),
+
+            // Add Subject field
+            if (!isLogin)
+              TextFormField(
+                controller: _subjectController,
+                decoration: _inputDecoration(
+                  'Subject',
+                  Icons.subject,
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your subject';
+                  }
+                  return null;
+                },
+              ),
+
+            if (!isLogin) const SizedBox(height: 15),
+
+            // Add Qualification field
+            if (!isLogin)
+              TextFormField(
+                controller: _qualificationController,
+                decoration: _inputDecoration(
+                  'Qualification',
+                  Icons.school,
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your qualification';
                   }
                   return null;
                 },
@@ -505,15 +555,15 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
                   final DateTime? pickedDate = await showDatePicker(
                     context: context,
                     initialDate: _selectedDate ??
-                        DateTime(2000), // Default to year 2000 if not selected
+                        DateTime(1980), // Default to year 1980 for teachers
                     firstDate: DateTime(1950),
                     lastDate: DateTime.now(),
                     builder: (context, child) {
                       return Theme(
                         data: ThemeData.light().copyWith(
-                          primaryColor: const Color(0xFF49ABB0),
+                          primaryColor: const Color(0xFFE195AB),
                           colorScheme: const ColorScheme.light(
-                            primary: Color(0xFF49ABB0),
+                            primary: Color(0xFFE195AB),
                             onPrimary: Colors.white,
                             surface: Colors.white,
                             onSurface: Colors.black,
@@ -561,7 +611,7 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
 
             if (!isLogin) const SizedBox(height: 15),
 
-// Add Address Line 2 (optional)
+            // Add Address Line 2 (optional)
             if (!isLogin)
               TextFormField(
                 controller: _addressLine2Controller,
@@ -573,7 +623,7 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
 
             if (!isLogin) const SizedBox(height: 15),
 
-// Add City
+            // Add City
             if (!isLogin)
               TextFormField(
                 controller: _cityController,
@@ -591,7 +641,7 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
 
             if (!isLogin) const SizedBox(height: 15),
 
-// Add State
+            // Add State
             if (!isLogin)
               TextFormField(
                 controller: _stateController,
@@ -640,7 +690,7 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
                   child: ElevatedButton(
                     onPressed: _submitForm,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF49ABB0),
+                      backgroundColor: const Color(0xFFE195AB), // Teacher color
                       padding: const EdgeInsets.symmetric(vertical: 15),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
@@ -676,7 +726,7 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
       ),
       prefixIcon: Icon(
         icon,
-        color: const Color(0xFF49ABB0),
+        color: const Color(0xFFE195AB), // Teacher color
       ),
       suffixIcon: isPassword
           ? IconButton(
@@ -703,7 +753,7 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10),
         borderSide: const BorderSide(
-          color: Color(0xFF49ABB0),
+          color: Color(0xFFE195AB), // Teacher color
           width: 2.0,
         ),
       ),
@@ -714,8 +764,8 @@ class _AuthPageState extends State<AuthPage> with TickerProviderStateMixin {
   }
 }
 
-// Custom background painter
-class BackgroundPainter extends CustomPainter {
+// Custom background painter for teacher page with teacher color theme
+class TeacherBackgroundPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()

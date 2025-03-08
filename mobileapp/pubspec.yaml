@@ -17,6 +17,7 @@ dependencies:
   shared_preferences: ^2.2.2
   cupertino_icons: ^1.0.8
   http: ^1.3.0
+  animated_text_kit: ^4.1.0
 
 dev_dependencies:
   flutter_test:
@@ -29,21 +30,21 @@ flutter:
   uses-material-design: true
 
   assets:
-    - lib/assets/data/community.json
-    - lib/assets/images/
-    - lib/assets/data/assignment.json
-    - lib/assets/data/scores.json
-    - lib/assets/data/news.json
-    - lib/assets/images/news/image1.jpg
-    - lib/assets/images/news/image2.jpeg
-    - lib/assets/images/news/image3.jpeg
-    - lib/assets/data/notification.json
-    - lib/assets/data/students.json
-    - lib/assets/data/doubtChat.json
-    - lib/assets/data/resource.json
-    - lib/assets/images/default.jpg
+    - lib/data/community.json
+    - lib/images/
+    - lib/data/assignment.json
+    - lib/data/scores.json
+    - lib/data/news.json
+    - lib/images/news/image1.jpg
+    - lib/images/news/image2.jpeg
+    - lib/images/news/image3.jpeg
+    - lib/data/notification.json
+    - lib/data/students.json
+    - lib/data/doubtChat.json
+    - lib/data/resource.json
+    - lib/images/default.jpg
 
   fonts:
     - family: CustomFont
       fonts:
-        - asset: lib\assets\fonts\Technor-Variable.ttf
+        - asset: lib\fonts\Technor-Variable.ttf

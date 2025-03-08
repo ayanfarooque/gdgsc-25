@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import './assets/pages/home.dart';
-import './assets/pages/assignment/landing.dart';
-import './assets/pages/aibot/landing.dart';
-import './assets/pages/resources/landing.dart';
-import './assets/pages/community/landing.dart';
-import './assets/pages/score.dart';
-import './assets/pages/profile.dart';
-import './assets/pages/notification.dart';
-import './assets/pages/sisu.dart';
+import 'student/home.dart';
+import 'student/assignment.dart';
+import 'student/aibot.dart';
+import 'student/resources/landing.dart';
+import 'student/community.dart';
+import 'student/score.dart';
+import 'student/profile.dart';
+import 'student/notification.dart';
+import 'authorization/studentsisu.dart';
+import 'authorization/rolepicker.dart';
+import 'authorization/teachersisu.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -58,10 +60,12 @@ class MyApp extends StatelessWidget {
               fontWeight: FontWeight.w100),
         ),
       ),
-      initialRoute: isLoggedIn ? '/' : '/auth',
+      initialRoute: isLoggedIn ? '/role' : '/role',
       routes: {
+        '/role': (context) => RolePickerScreen(),
         '/': (context) => const HomePage(),
-        '/auth': (context) => const AuthPage(),
+        '/teacherauth': (context) => const TeacherAuthPage(),
+        '/studentauth': (context) => const StudentAuthPage(),
         '/assignment': (context) => AssignmentLanding(),
         '/aibot': (context) => AiLanding(),
         '/resources': (context) => ResourceLanding(),
@@ -75,7 +79,7 @@ class MyApp extends StatelessWidget {
         // If user is not logged in, redirect all routes except /auth to the auth page
         if (!isLoggedIn && settings.name != '/auth') {
           return MaterialPageRoute(
-            builder: (context) => const AuthPage(),
+            builder: (context) => const StudentAuthPage(),
           );
         }
         return null; // Let the routes above handle the navigation

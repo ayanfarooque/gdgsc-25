@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 
-import '../../components/header.dart';
-import '../../components/footer.dart';
-import '../../components/chatSidebar.dart';
+import '../components/header.dart';
+import '../components/footer.dart';
+import '../components/chatSidebar.dart';
 
 class AiLanding extends StatefulWidget {
   @override
@@ -34,7 +34,7 @@ class _LandingPageState extends State<AiLanding> {
   Future<void> loadChatData() async {
     try {
       final String response =
-          await rootBundle.loadString('lib/assets/data/doubtChat.json');
+          await rootBundle.loadString('lib/data/doubtChat.json');
       final List<dynamic> data = await json.decode(response);
 
       // Store full chat data

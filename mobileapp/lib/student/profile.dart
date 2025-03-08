@@ -27,7 +27,7 @@ class _ProfilePageState extends State<Profile> {
 
   void _loadStudentData() async {
     final String response =
-        await rootBundle.loadString('lib/assets/data/students.json');
+        await rootBundle.loadString('lib/data/students.json');
     final data = await json.decode(response);
     setState(() {
       _studentData = data.firstWhere(
@@ -89,7 +89,7 @@ class _ProfilePageState extends State<Profile> {
                   onNotificationTap: () {
                     Navigator.pushNamed(context, '/notifications');
                   },
-                  profileImage: 'assets/images/image3.png',
+                  profileImage: 'images/image3.png',
                   welcomeText: "WELCOME HASHIM",
                 ),
               ),

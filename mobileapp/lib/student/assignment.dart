@@ -4,9 +4,9 @@ import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:intl/intl.dart';
 
-import '../../components/header.dart';
-import '../../components/footer.dart';
-import '../../components/assignmentSidebar.dart';
+import '../components/header.dart';
+import '../components/footer.dart';
+import '../components/assignmentSidebar.dart';
 
 class AssignmentLanding extends StatefulWidget {
   @override
@@ -31,7 +31,7 @@ class _LandingPageState extends State<AssignmentLanding> {
 
   Future<void> _loadAssignments() async {
     final String response =
-        await rootBundle.loadString('lib/assets/data/assignment.json');
+        await rootBundle.loadString('lib/data/assignment.json');
     final List<dynamic> data = json.decode(response);
 
     setState(() {

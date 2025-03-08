@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
-import '../../components/header.dart';
-import '../../components/footer.dart';
-import '../../components/card.dart';
+import '../components/header.dart';
+import '../components/footer.dart';
+import '../components/card.dart';
 
 class CommunityLanding extends StatefulWidget {
   @override
@@ -33,7 +33,7 @@ class _LandingPageState extends State<CommunityLanding> {
 
   void _loadPosts() async {
     final String response =
-        await rootBundle.loadString('lib/assets/data/community.json');
+        await rootBundle.loadString('lib/data/community.json');
     final data = await json.decode(response);
     setState(() {
       _posts = data;
