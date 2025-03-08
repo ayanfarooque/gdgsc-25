@@ -234,7 +234,7 @@ class _TeacherAuthPageState extends State<TeacherAuthPage>
         teacherLogin(_emailController.text, _passwordController.text).then((_) {
           getToken().then((token) {
             if (token != null) {
-              Navigator.pushReplacementNamed(context, '/teacher');
+              Navigator.pushReplacementNamed(context, '/teacherhome');
             } else {
               // Login failed, show error
               ScaffoldMessenger.of(context).showSnackBar(

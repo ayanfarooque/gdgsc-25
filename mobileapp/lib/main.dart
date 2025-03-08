@@ -11,6 +11,7 @@ import 'student/notification.dart';
 import 'authorization/studentsisu.dart';
 import 'authorization/rolepicker.dart';
 import 'authorization/teachersisu.dart';
+import 'teacher/home.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -64,6 +65,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/role': (context) => RolePickerScreen(),
         '/': (context) => const HomePage(),
+        '/teacherhome': (context) => const TeacherHomePage(),
         '/teacherauth': (context) => const TeacherAuthPage(),
         '/studentauth': (context) => const StudentAuthPage(),
         '/assignment': (context) => AssignmentLanding(),

@@ -84,7 +84,7 @@ class Header extends StatelessWidget {
                   ),
                   child: CircleAvatar(
                     radius: 20,
-                    backgroundImage: AssetImage('lib/assets/images/image3.png'),
+                    backgroundImage: AssetImage('lib/images/image3.png'),
                   ),
                 ),
                 SizedBox(width: 12),
