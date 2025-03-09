@@ -62,7 +62,7 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
         Navigator.pushNamed(context, '/teacherai');
         break;
       case 4:
-        Navigator.pushNamed(context, '/teacher/resources');
+        Navigator.pushNamed(context, '/teacherresources');
         break;
     }
   }

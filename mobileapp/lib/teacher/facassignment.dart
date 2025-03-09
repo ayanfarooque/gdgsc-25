@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:intl/intl.dart';
 
-import '../components/header.dart';
+import '../components/teacherheader.dart';
 import '../components/footer.dart';
 import '../components/assignmentSidebar.dart';
 
@@ -176,14 +176,14 @@ class _LandingPageState extends State<FacAssignmentLanding> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: Header(
+                    child: TeacherHeader(
                       onProfileTap: () {
                         Navigator.pushNamed(context, '/teacherprofile');
                       },
                       onNotificationTap: () {
                         Navigator.pushNamed(context, '/notifications');
                       },
-                      profileImage: 'assets/images/teacher.png',
+                      profileImage: 'lib/images/teacher.png',
                       welcomeText: "WELCOME SENSEI",
                     ),
                   ),
