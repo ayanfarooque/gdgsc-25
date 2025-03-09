@@ -10,7 +10,8 @@ import {
   Users,
   Settings,
   Menu,
-  Newspaper
+  Newspaper,
+  Bell 
 } from "lucide-react";
 import SidebarItem from "./SidebarItem";
 
@@ -25,6 +26,7 @@ const Sidebar = ({ role }) => {
     { name: "News", icon: Newspaper, color: "#EC4899", path: "/Resources" },
     { name: "ChatBot", icon: MessageCircle, color: "#10B981", path: "/chat-page" },
     { name: "Settings", icon: Settings, color: "#6EE7B7", path: "/settings" },
+    { name: "Notifications", icon: Bell, color: "#8B5CF6", path: "/notification"},
   ];
 
   const TEACHER_ITEMS = [

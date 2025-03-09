@@ -18,9 +18,10 @@ import OverviewPage from './pages/Dashboardpages/OverviewPage';
 import Chatbot from './pages/Chatbot';
 import TeachersOverview from './pages/TeacherPages/TeachersOverview';
 import Header from './pages/Dashboardpages/Header';
+import Notification from './pages/Notification';
 const App = () => {
   const [selectedRole, setSelectedRole] = useState("");
-  const [role, setRole] = useState("teacher"); 
+  const [role, setRole] = useState(""); 
   const handleRoleSelection = (role) => {
     setSelectedRole(role);
     setRole(role)
@@ -45,6 +46,7 @@ const App = () => {
           <Route path='/teachers-Community' element={<TeachersCommunityPage />} />
           <Route path='/teacher-home' element={<TeachersOverview role={role} />} />
           <Route path='/prev' element={<TeacherHomePage />} />
+          <Route path='/notification' element={<Notification />} />
         </Routes>
       </div>
 
