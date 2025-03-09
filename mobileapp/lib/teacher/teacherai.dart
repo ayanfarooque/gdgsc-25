@@ -117,7 +117,7 @@ class _LandingPageState extends State<TeacherAi> {
         Navigator.pushNamed(context, '/assignment');
         break;
       case 2:
-        Navigator.pushNamed(context, '/community');
+        Navigator.pushNamed(context, '/teachercommunity');
         break;
       case 3:
         Navigator.pushNamed(context, '/teacherai');

@@ -56,7 +56,7 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
         Navigator.pushNamed(context, '/teacher/assignments');
         break;
       case 2:
-        Navigator.pushNamed(context, '/teacher/community');
+        Navigator.pushNamed(context, '/teachercommunity');
         break;
       case 3:
         Navigator.pushNamed(context, '/teacherai');

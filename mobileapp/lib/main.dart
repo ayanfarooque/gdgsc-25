@@ -14,6 +14,7 @@ import 'authorization/teachersisu.dart';
 import 'teacher/home.dart';
 import 'teacher/teacherprofile.dart';
 import 'teacher/teacherai.dart';
+import 'teacher/faccommunity.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -70,6 +71,7 @@ class MyApp extends StatelessWidget {
         '/teacherai': (context) => TeacherAi(),
         '/teacherprofile': (context) => TeacherProfilePage(),
         '/teacherhome': (context) => const TeacherHomePage(),
+        '/teachercommunity': (context) => FacCommunityLanding(),
         '/teacherauth': (context) => const TeacherAuthPage(),
         '/studentauth': (context) => const StudentAuthPage(),
         '/assignment': (context) => AssignmentLanding(),
