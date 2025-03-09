@@ -68,3 +68,22 @@ exports.getsingleassignment = async (req, res) => {
         res.status(500).json({ success: false, message: "Error fetching assignment" });
     }
 };
+
+exports.getAllSubmissions = async (req, res) => {
+  try {
+    const submissions = await SubmitAssignment.find().populate("studentId").populate("assignmentId").populate("classroomId");
+    res.status(200).json(submissions);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch assignments" });
+  }
+};
+
+exports.getStudentSubmissions = async (req, res) => {
+  try {
+    const { studentId } = req.params;
+    const submissions = await SubmitAssignment.find({ studentId }).populate("assignmentId");
+    res.status(200).json(submissions);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch student's assignments" });
+  }
+};

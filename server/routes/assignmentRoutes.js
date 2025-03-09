@@ -9,4 +9,6 @@ router.get("/previous/:studentid", assignmentController.getpreviousassignments);
 
 router.get("/single/:assignmentId", assignmentController.getsingleassignment);
 
+router.get("/student/:studentId", assignmentController.getStudentSubmissions)
+
 module.exports = router;
