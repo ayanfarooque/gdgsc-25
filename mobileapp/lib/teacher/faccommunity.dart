@@ -60,19 +60,19 @@ class _LandingPageState extends State<FacCommunityLanding> {
     // Navigate to different pages based on index
     switch (index) {
       case 0:
-        Navigator.pushNamed(context, '/');
+        Navigator.pushNamed(context, '/teacherhome');
         break;
       case 1:
-        Navigator.pushNamed(context, '/assignment');
+        Navigator.pushNamed(context, '/teacherassignment');
         break;
       case 2:
-        Navigator.pushNamed(context, '/community');
+        Navigator.pushNamed(context, '/teachercommunity');
         break;
       case 3:
-        Navigator.pushNamed(context, '/aibot');
+        Navigator.pushNamed(context, '/teacherai');
         break;
       case 4:
-        Navigator.pushNamed(context, '/resources');
+        Navigator.pushNamed(context, '/teacherresources');
         break;
     }
   }

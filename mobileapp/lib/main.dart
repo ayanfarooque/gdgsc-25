@@ -15,6 +15,7 @@ import 'teacher/home.dart';
 import 'teacher/teacherprofile.dart';
 import 'teacher/teacherai.dart';
 import 'teacher/faccommunity.dart';
+import 'teacher/facassignment.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -68,6 +69,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/role': (context) => RolePickerScreen(),
         '/': (context) => const HomePage(),
+        '/teacherassignment': (context) => FacAssignmentLanding(),
         '/teacherai': (context) => TeacherAi(),
         '/teacherprofile': (context) => TeacherProfilePage(),
         '/teacherhome': (context) => const TeacherHomePage(),

@@ -50,10 +50,10 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
     // Navigate to different pages based on index
     switch (index) {
       case 0:
-        Navigator.pushNamed(context, '/teacher');
+        Navigator.pushNamed(context, '/teacherhome');
         break;
       case 1:
-        Navigator.pushNamed(context, '/teacher/assignments');
+        Navigator.pushNamed(context, '/teacherassignment');
         break;
       case 2:
         Navigator.pushNamed(context, '/teachercommunity');
