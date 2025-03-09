@@ -4,7 +4,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:fl_chart/fl_chart.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
-import '../components/header.dart';
+import '../components/teacherheader.dart';
 import '../components/footer.dart';
 
 class TeacherHomePage extends StatefulWidget {
@@ -59,7 +59,7 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
         Navigator.pushNamed(context, '/teacher/community');
         break;
       case 3:
-        Navigator.pushNamed(context, '/teacher/aibot');
+        Navigator.pushNamed(context, '/teacherai');
         break;
       case 4:
         Navigator.pushNamed(context, '/teacher/resources');
@@ -79,12 +79,12 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Header(
+                child: TeacherHeader(
                   onProfileTap: () {
-                    Navigator.pushNamed(context, '/teacher/profile');
+                    Navigator.pushNamed(context, '/teacherprofile');
                   },
                   onNotificationTap: () {
-                    Navigator.pushNamed(context, '/teacher/notifications');
+                    Navigator.pushNamed(context, '/teachernotifications');
                   },
                   profileImage: 'lib/images/teacher.png',
                   welcomeText: "WELCOME SENSEI",

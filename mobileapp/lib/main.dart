@@ -12,6 +12,8 @@ import 'authorization/studentsisu.dart';
 import 'authorization/rolepicker.dart';
 import 'authorization/teachersisu.dart';
 import 'teacher/home.dart';
+import 'teacher/teacherprofile.dart';
+import 'teacher/teacherai.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -61,10 +63,12 @@ class MyApp extends StatelessWidget {
               fontWeight: FontWeight.w100),
         ),
       ),
-      initialRoute: isLoggedIn ? '/role' : '/role',
+      initialRoute: isLoggedIn ? '/teacherhome' : '/teacherhome',
       routes: {
         '/role': (context) => RolePickerScreen(),
         '/': (context) => const HomePage(),
+        '/teacherai': (context) => TeacherAi(),
+        '/teacherprofile': (context) => TeacherProfilePage(),
         '/teacherhome': (context) => const TeacherHomePage(),
         '/teacherauth': (context) => const TeacherAuthPage(),
         '/studentauth': (context) => const StudentAuthPage(),
