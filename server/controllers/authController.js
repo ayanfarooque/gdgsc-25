@@ -94,6 +94,9 @@ exports.teacherLogin = async (req, res) => {
         }
 
         const isMatch = await bcrypt.compare(password, teacher.password);
+        console.log("Entered Password:", password);
+        console.log("Stored Hashed Password:", teacher.password);
+        console.log("Password Match:", isMatch);
         if (!isMatch) {
             return res.status(401).json({ message: "Invalid credentials" });
         }
