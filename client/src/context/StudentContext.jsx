@@ -5,16 +5,15 @@ import { toast } from "react-toastify";
 export const StudentContext = createContext();
 
 const StudentContextProvider = (props) => {
-    const [ttoken, setttoken] = useState(localStorage.getItem("tToken") || "");
+    const [stoken, setstoken] = useState(localStorage.getItem("sToken") || "");
     const [Students, setStudents] = useState([]);
     const backendUrl = "http://localhost:5000";
-
     const getAllStudents = async () => {
         try {
             const { data } = await axios.post(
                 `${backendUrl}/api/admin/all-Students`,
                 {},
-                { headers: { Authorization: `Bearer ${ttoken}` } }
+                { headers: { Authorization: `Bearer ${stoken}` } }
             );
 
             if (data.success) {
@@ -29,8 +28,8 @@ const StudentContextProvider = (props) => {
 
     
     const value = {
-        ttoken,
-        setttoken,
+        stoken,
+        setstoken,
         backendUrl,
         Students,
         getAllStudents

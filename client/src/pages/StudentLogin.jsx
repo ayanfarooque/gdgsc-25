@@ -5,12 +5,13 @@ import * as LoginContext from "./LoginContext";
 import "./style.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { StudentContext } from "../context/StudentContext";
 
 function StudentLogin() {
     const [isStudentSignIn, toggleStudent] = useState(true);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-   // const { setatoken, backendUrl } = useContext(StudentContext);
+   const { setstoken, backendUrl } = useContext(StudentContext)
     const navigate = useNavigate();
 
     const onSubmitHandler = async (event) => {
@@ -19,14 +20,18 @@ function StudentLogin() {
         console.log("Email:", email, "Password:", password);
 
         try {
-            const { data } = await axios.post(`${backendUrl}/api/Students/login`, { email, password });
-            if (data.success) {
-                console.log("Login successful, token:", data.token);
-                localStorage.setItem("sToken", data.token);
-                setatoken(data.token);
+            const response = await axios.post(`${backendUrl}/api/students/login`, { email, password });
+    
+            console.log("Full API Response:", response); // Log full response
+            console.log("Response Data:", response.data); // Log response data only
+    
+            if (response.data.token) { // Ensure token exists
+                localStorage.setItem("sToken", response.data.token);
+                setstoken(response.data.token);
                 toast.success("Login successful!");
+                navigate("/Stu-Dash");
             } else {
-                toast.error(data.message || "Invalid credentials");
+                toast.error(response.data.message || "Invalid credentials");
             }
         } catch (error) {
             console.error("Error logging in:", error.response?.data || error.message);
@@ -36,20 +41,7 @@ function StudentLogin() {
 
     return (
         <LoginContext.PageWrapper>
-            <button
-                className="back-button"
-                onClick={() => navigate("/")}
-                style={{
-                    position: "absolute",
-                    top: "20px",
-                    left: "20px",
-                    padding: "10px 20px",
-                    fontSize: "16px",
-                    cursor: "pointer",
-                }}
-            >
-                Back
-            </button>
+            
 
             <LoginContext.Container>
                 <LoginContext.SignUpContainer signinIn={isStudentSignIn}>

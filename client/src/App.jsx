@@ -24,16 +24,15 @@ const App = () => {
   const navigate = useNavigate();
 
   // Check token from localStorage
-  const token = localStorage.getItem("tToken");
-
-  
+  const ttoken = localStorage.getItem("tToken");
 
   const handleRoleSelection = (role) => {
     setSelectedRole(role);
     setRole(role);
   };
 
-  return token ? (
+  const stoken = localStorage.getItem("sToken")
+  return stoken ? (
     <div className="flex h-screen w-full bg-gray-900 text-gray-100">
       <Sidebar role={role} />
       <div className="flex-1 overflow-auto">
