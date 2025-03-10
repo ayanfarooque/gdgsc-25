@@ -22,7 +22,7 @@ function StudentLogin() {
             const { data } = await axios.post(`${backendUrl}/api/Students/login`, { email, password });
             if (data.success) {
                 console.log("Login successful, token:", data.token);
-                localStorage.setItem("aToken", data.token);
+                localStorage.setItem("sToken", data.token);
                 setatoken(data.token);
                 toast.success("Login successful!");
             } else {

@@ -1,45 +1,49 @@
 import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import * as LoginContext from "./LoginContext"; // Styled components
-import "./style.css"; // Shared styles
-import { toast, ToastContainer } from "react-toastify"; // Import Toastify for pop-up error/success messages
-import "react-toastify/dist/ReactToastify.css"; // Import Toastify CSS for pop-up error/success messages
+import * as LoginContext from "./LoginContext";
+import "./style.css";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { TeacherContext } from "../context/TeacherContext"; 
 
 function TeacherLogin() {
-    const [isTeacherSignIn, toggleTeacher] = useState(true); // State for toggling between sign-in and sign-up forms
-    const [email, setEmail] = useState(""); // State for email input
-    const [password, setPassword] = useState(""); // State for password input
-   // const { setatoken, backendUrl } = useContext(TeacherContext); // Context for backend URL and token setter
-    const navigate = useNavigate(); // React Router's useNavigate hook for navigation
+    const [isTeacherSignIn, toggleTeacher] = useState(true);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const { setttoken, backendUrl } = useContext(TeacherContext); 
+    const navigate = useNavigate();
 
     const onSubmitHandler = async (event) => {
-        event.preventDefault(); // Prevent default form submission behavior
-        console.log("Submitting to:", `${backendUrl}/api/Teacher/login`); // Log the backend URL for debugging
-        console.log("Email:", email, "Password:", password); // Log the entered email and password for debugging
-
+        event.preventDefault();
+        console.log("Submitting to:", `${backendUrl}/api/teachers/login`);
+        console.log("Email:", email, "Password:", password);
+    
         try {
-            // Sending email and password in the request body
-            const { data } = await axios.post(`${backendUrl}/api/Teacher/login`, { email, password });
-            if (data.success) {
-                console.log("Login successful, token:", data.token); // Log success and the received token
-                localStorage.setItem("aToken", data.token); // Save token in local storage for persistent login
-                setatoken(data.token); // Save token in context
-                toast.success("Login successful!"); // Show success toast notification
+            const response = await axios.post(`${backendUrl}/api/teachers/login`, { email, password });
+    
+            console.log("Full API Response:", response); // Log full response
+            console.log("Response Data:", response.data); // Log response data only
+    
+            if (response.data.token) { // Ensure token exists
+                localStorage.setItem("tToken", response.data.token);
+                setttoken(response.data.token);
+                toast.success("Login successful!");
+                navigate("/teacher-home");
             } else {
-                toast.error(data.message || "Invalid credentials"); // Show error toast for invalid credentials
+                toast.error(response.data.message || "Invalid credentials");
             }
         } catch (error) {
-            console.error("Error logging in:", error.response?.data || error.message); // Log error details
-            toast.error("An error occurred during login. Please try again."); // Show error toast for request failure
+            console.error("Error logging in:", error.response?.data || error.message);
+            toast.error("An error occurred during login. Please try again.");
         }
     };
-
+    
     return (
         <LoginContext.PageWrapper>
             <button
                 className="back-button"
-                onClick={() => navigate("/")} // Navigate to home page on click
+                onClick={() => navigate("/")}
                 style={{
                     position: "absolute",
                     top: "20px",
@@ -53,72 +57,48 @@ function TeacherLogin() {
             </button>
 
             <LoginContext.Container>
-                {/* Sign-Up Form */}
                 <LoginContext.SignUpContainer signinIn={isTeacherSignIn}>
                     <LoginContext.Form onSubmit={onSubmitHandler}>
                         <LoginContext.Title>Create Teacher Account</LoginContext.Title>
                         <LoginContext.Input type="text" placeholder="Teacher Name" />
-                        <LoginContext.Input
-                            onChange={(e) => setEmail(e.target.value)}
-                            type="email"
-                            placeholder="Teacher Email"
-                        />
-                        <LoginContext.Input
-                            onChange={(e) => setPassword(e.target.value)}
-                            type="password"
-                            placeholder="Password"
-                        />
+                        <LoginContext.Input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Teacher Email" />
+                        <LoginContext.Input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" />
                         <LoginContext.Button type="submit">Sign Up</LoginContext.Button>
                     </LoginContext.Form>
                 </LoginContext.SignUpContainer>
 
-                {/* Sign-In Form */}
                 <LoginContext.SignInContainer signinIn={isTeacherSignIn}>
                     <LoginContext.Form onSubmit={onSubmitHandler}>
                         <LoginContext.Title>Teacher Sign In</LoginContext.Title>
-                        <LoginContext.Input
-                            onChange={(e) => setEmail(e.target.value)}
-                            type="email"
-                            placeholder="Teacher Email"
-                        />
-                        <LoginContext.Input
-                            onChange={(e) => setPassword(e.target.value)}
-                            type="password"
-                            placeholder="Password"
-                        />
+                        <LoginContext.Input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Teacher Email" />
+                        <LoginContext.Input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" />
                         <LoginContext.Anchor href="#">Forgot your password?</LoginContext.Anchor>
                         <LoginContext.Button type="submit">Sign In</LoginContext.Button>
                     </LoginContext.Form>
                 </LoginContext.SignInContainer>
 
-                {/* Overlay */}
                 <LoginContext.OverlayContainer signinIn={isTeacherSignIn}>
                     <LoginContext.Overlay signinIn={isTeacherSignIn}>
-                        {/* Left Panel */}
                         <LoginContext.LeftOverlayPanel signinIn={isTeacherSignIn}>
                             <LoginContext.Title>Welcome Back, Teacher!</LoginContext.Title>
                             <LoginContext.Paragraph>
                                 To stay connected with us, please log in with your Teacher credentials.
                             </LoginContext.Paragraph>
-                            <LoginContext.GhostButton onClick={() => toggleTeacher(true)}>
-                                Sign In
-                            </LoginContext.GhostButton>
+                            <LoginContext.GhostButton onClick={() => toggleTeacher(true)}>Sign In</LoginContext.GhostButton>
                         </LoginContext.LeftOverlayPanel>
 
-                        {/* Right Panel */}
                         <LoginContext.RightOverlayPanel signinIn={isTeacherSignIn}>
                             <LoginContext.Title>Hello, Teacher!</LoginContext.Title>
                             <LoginContext.Paragraph>
                                 Enter your details and start managing your platform effectively.
                             </LoginContext.Paragraph>
-                            <LoginContext.GhostButton onClick={() => toggleTeacher(false)}>
-                                Sign Up
-                            </LoginContext.GhostButton>
+                            <LoginContext.GhostButton onClick={() => toggleTeacher(false)}>Sign Up</LoginContext.GhostButton>
                         </LoginContext.RightOverlayPanel>
                     </LoginContext.Overlay>
                 </LoginContext.OverlayContainer>
             </LoginContext.Container>
-            <ToastContainer /> {/* Include ToastContainer for displaying notifications */}
+
+            <ToastContainer />
         </LoginContext.PageWrapper>
     );
 }

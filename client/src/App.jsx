@@ -1,14 +1,13 @@
-import React, { useState } from 'react'
-import { Route, Routes } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import StudentPage from './pages/StudentPage';
 import TestPage from './pages/TestPage';
 import Sidebar from './components/Dashboardcomponents/Sidebar';
 import AssignmentPage from './pages/AssignmentPage';
 import ResourcePage from './pages/ResourcePage';
-import NewsDetail from './components/NewsResourcesComponent/NewsDetail'
+import NewsDetail from './components/NewsResourcesComponent/NewsDetail';
 import TeacherAssignment from './pages/TeacherAssignment';
 import StatusPage from './pages/StatusPage';
-
 import TeachersCommunityPage from './pages/TeachersCommunityPage';
 import LoginSelection from './pages/LoginSelection';
 import TeacherLogin from './pages/TeacherLogin';
@@ -17,20 +16,25 @@ import TeacherHomePage from './pages/TeacherHomePage';
 import OverviewPage from './pages/Dashboardpages/OverviewPage';
 import Chatbot from './pages/Chatbot';
 import TeachersOverview from './pages/TeacherPages/TeachersOverview';
-import Header from './pages/Dashboardpages/Header';
 import Notification from './pages/Notification';
+
 const App = () => {
   const [selectedRole, setSelectedRole] = useState("");
-  const [role, setRole] = useState(""); 
+  const [role, setRole] = useState("");
+  const navigate = useNavigate();
+
+  // Check token from localStorage
+  const token = localStorage.getItem("tToken");
+
+  
+
   const handleRoleSelection = (role) => {
     setSelectedRole(role);
-    setRole(role)
-  }
+    setRole(role);
+  };
 
-  const token = false;
   return token ? (
     <div className="flex h-screen w-full bg-gray-900 text-gray-100">
-      
       <Sidebar role={role} />
       <div className="flex-1 overflow-auto">
         <Routes>
@@ -49,9 +53,6 @@ const App = () => {
           <Route path='/notification' element={<Notification />} />
         </Routes>
       </div>
-
-
-
     </div>
   ) : (
     <>
@@ -59,7 +60,7 @@ const App = () => {
       {selectedRole === "teacher" && <TeacherLogin />}
       {selectedRole === "student" && <StudentLogin />}
     </>
-  )
-}
+  );
+};
 
 export default App;
