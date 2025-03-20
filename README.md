@@ -10,7 +10,7 @@ Participants are tasked with creating an AI-powered teacher assistant that autom
 A **Google Solution Challenge Project'25** Organised By Google Developer Student Clubs Project by **Team Nastavnik From Government College of Engineering, Aurangabad, KJSIT and WIEECT**
 
 ## Introduction to Nastavnik Video 
-[![Watch the demo](https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg)](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
+[![Watch the demo](https://img.youtube.com/vi/tn2lHNVqYaI/maxresdefault.jpg)](https://youtu.be/tn2lHNVqYaI)
 
 ### Our Target SDG Goals 🎯
 
