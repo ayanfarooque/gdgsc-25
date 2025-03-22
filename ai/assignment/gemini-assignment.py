@@ -11,7 +11,7 @@ load_dotenv()
 # Configure Google Gemini-Pro AI model
 GOOGLE_API_KEY = "AIzaSyAvi9ck-A61jEKcQyMTimzI-SVVd_kH1fU"
 gen_ai.configure(api_key=GOOGLE_API_KEY)
-model = gen_ai.GenerativeModel('gemini-pro')
+model = gen_ai.GenerativeModel('models/gemini-2.0-flash-lite')
 
 class AssignmentChecker(QWidget):
     def __init__(self):
