@@ -1,3 +1,4 @@
+import 'package:dummyapp/teacher/facnotification.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'student/home.dart';
@@ -66,10 +67,12 @@ class MyApp extends StatelessWidget {
               fontWeight: FontWeight.w100),
         ),
       ),
-      initialRoute: isLoggedIn ? '/teacherhome' : '/teacherhome',
+      initialRoute: isLoggedIn ? '/role' : '/role',
       routes: {
         '/role': (context) => RolePickerScreen(),
         '/': (context) => const HomePage(),
+        '/teachernotifications': (context) =>
+            FacNotifications(studentId: '603dcd7f1c4ae72f8c8b4571'),
         '/teacherassignment': (context) => FacAssignmentLanding(),
         '/teacherresources': (context) => FacResourceLanding(),
         '/teacherai': (context) => TeacherAi(),

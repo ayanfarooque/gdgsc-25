@@ -111,10 +111,10 @@ class _LandingPageState extends State<TeacherAi> {
     // Navigate to different pages based on index
     switch (index) {
       case 0:
-        Navigator.pushNamed(context, '/');
+        Navigator.pushNamed(context, '/teacherhome');
         break;
       case 1:
-        Navigator.pushNamed(context, '/assignment');
+        Navigator.pushNamed(context, '/teacherassignment');
         break;
       case 2:
         Navigator.pushNamed(context, '/teachercommunity');
@@ -123,7 +123,7 @@ class _LandingPageState extends State<TeacherAi> {
         Navigator.pushNamed(context, '/teacherai');
         break;
       case 4:
-        Navigator.pushNamed(context, '/resources');
+        Navigator.pushNamed(context, '/teacherresources');
         break;
     }
   }
@@ -153,7 +153,7 @@ class _LandingPageState extends State<TeacherAi> {
                         Navigator.pushNamed(context, '/teacherprofile');
                       },
                       onNotificationTap: () {
-                        Navigator.pushNamed(context, '/notifications');
+                        Navigator.pushNamed(context, '/teachernotifications');
                       },
                       profileImage: 'assets/images/teacher.png',
                       welcomeText: "WELCOME SENSEI",

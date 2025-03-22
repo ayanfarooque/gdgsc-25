@@ -195,7 +195,7 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                     const SizedBox(height: 8),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/teacher/assignments');
+                        Navigator.pushNamed(context, '/teacherassignment');
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor:

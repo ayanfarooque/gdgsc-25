@@ -170,7 +170,7 @@ class _LandingPageState extends State<FacResourceLanding> {
       backgroundColor: const Color(0xFFE195AB),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -181,7 +181,7 @@ class _LandingPageState extends State<FacResourceLanding> {
                     Navigator.pushNamed(context, '/teacherprofile');
                   },
                   onNotificationTap: () {
-                    Navigator.pushNamed(context, '/notifications');
+                    Navigator.pushNamed(context, '/teachernotifications');
                   },
                   profileImage: 'assets/images/teacher.png',
                   welcomeText: "WELCOME SENSEI",
@@ -198,6 +198,9 @@ class _LandingPageState extends State<FacResourceLanding> {
                 ),
                 child: Column(
                   children: [
+                    Drawer(
+                      
+                    ),
                     Container(
                       margin: EdgeInsets.fromLTRB(30.0, 10.0, 0.0, 0.0),
                       decoration: BoxDecoration(),

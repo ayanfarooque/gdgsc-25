@@ -95,7 +95,7 @@ class TeacherHeader extends StatelessWidget {
                 ),
                 SizedBox(width: 12),
                 CircleAvatar(
-                  radius: 24,
+                  radius: 20,
                   backgroundColor: const Color.fromARGB(26, 33, 41, 79),
                   child: IconButton(
                     icon: const Icon(Icons.notifications),
@@ -104,7 +104,7 @@ class TeacherHeader extends StatelessWidget {
                   ),
                 ),
                 CircleAvatar(
-                  radius: 24,
+                  radius: 20,
                   backgroundColor: const Color.fromARGB(26, 33, 41, 79),
                   child: IconButton(
                     icon: const Icon(Icons.logout),
