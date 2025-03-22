@@ -9,6 +9,16 @@ const AssignmentBot = () => {
   const [rubric, setRubric] = useState("");
   const [totalMarks, setTotalMarks] = useState("");
   const [evaluation, setEvaluation] = useState("");
+  const [plagiarismResult, setPlagiarismResult] = useState("");
+
+  const validateFile = (file) => {
+    const allowedTypes = ["application/pdf", "image/jpeg", "image/png"];
+    if (!allowedTypes.includes(file.type)) {
+      alert("Invalid file type. Only PDF, JPG, and PNG are allowed.");
+      return false;
+    }
+    return true;
+  };
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
@@ -26,24 +36,6 @@ const AssignmentBot = () => {
     }
   };
 
-  const handleDragOver = (event) => {
-    event.preventDefault();
-    setDragging(true);
-  };
-
-  const handleDragLeave = () => {
-    setDragging(false);
-  };
-
-  const validateFile = (file) => {
-    const allowedTypes = ["application/pdf", "image/jpeg", "image/png"];
-    if (!allowedTypes.includes(file.type)) {
-      alert("Invalid file type. Only PDF, JPG, and PNG are allowed.");
-      return false;
-    }
-    return true;
-  };
-
   const handleUpload = async () => {
     if (!file) {
       alert("Please select a file.");
@@ -57,7 +49,6 @@ const AssignmentBot = () => {
       const response = await axios.post("http://localhost:5000/api/assignments/upload", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-
       alert("File uploaded successfully!");
       console.log(response.data);
     } catch (error) {
@@ -79,11 +70,24 @@ const AssignmentBot = () => {
         rubric: rubric,
         total_marks: totalMarks,
       });
-
       setEvaluation(response.data.evaluation);
+      handlePlagiarismCheck();
     } catch (error) {
       console.error("Evaluation error:", error.response?.data?.message || error.message);
       alert("Evaluation failed.");
+    }
+  };
+
+  const handlePlagiarismCheck = async () => {
+    try {
+      const response = await axios.post("http://127.0.0.1:5000/api/assignments/plagiarism", {
+        student_answer: studentAnswer,
+        model_answer: modelAnswer,
+      });
+      setPlagiarismResult(response.data.plagiarism_check);
+    } catch (error) {
+      console.error("Plagiarism check error:", error.response?.data?.message || error.message);
+      alert("Plagiarism check failed.");
     }
   };
 
@@ -94,8 +98,8 @@ const AssignmentBot = () => {
       <div
         className={`p-6 rounded-lg border-2 border-dashed ${dragging ? "border-blue-500 bg-blue-100" : "border-gray-400"}`}
         onDrop={handleDrop}
-        onDragOver={handleDragOver}
-        onDragLeave={handleDragLeave}
+        onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
+        onDragLeave={() => setDragging(false)}
       >
         <input type="file" accept=".pdf,.jpg,.jpeg,.png" className="hidden" id="fileInput" onChange={handleFileChange} />
         <label htmlFor="fileInput" className="cursor-pointer bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
@@ -107,37 +111,17 @@ const AssignmentBot = () => {
         Upload File
       </button>
 
-      <textarea
-        className="w-full p-2 mt-4 border rounded"
-        placeholder="Enter Student's Answer"
-        value={studentAnswer}
-        onChange={(e) => setStudentAnswer(e.target.value)}
-      />
-      <textarea
-        className="w-full p-2 mt-2 border rounded"
-        placeholder="Enter Model Answer (Optional)"
-        value={modelAnswer}
-        onChange={(e) => setModelAnswer(e.target.value)}
-      />
-      <textarea
-        className="w-full p-2 mt-2 border rounded"
-        placeholder="Enter Rubric (Optional)"
-        value={rubric}
-        onChange={(e) => setRubric(e.target.value)}
-      />
-      <input
-        type="number"
-        className="w-full p-2 mt-2 border rounded"
-        placeholder="Enter Total Marks"
-        value={totalMarks}
-        onChange={(e) => setTotalMarks(e.target.value)}
-      />
+      <textarea className="w-full p-2 mt-4 border rounded" placeholder="Enter Student's Answer" value={studentAnswer} onChange={(e) => setStudentAnswer(e.target.value)} />
+      <textarea className="w-full p-2 mt-2 border rounded" placeholder="Enter Model Answer (Optional)" value={modelAnswer} onChange={(e) => setModelAnswer(e.target.value)} />
+      <textarea className="w-full p-2 mt-2 border rounded" placeholder="Enter Rubric (Optional)" value={rubric} onChange={(e) => setRubric(e.target.value)} />
+      <input type="number" className="w-full p-2 mt-2 border rounded" placeholder="Enter Total Marks" value={totalMarks} onChange={(e) => setTotalMarks(e.target.value)} />
 
       <button onClick={handleEvaluate} className="bg-blue-500 text-white px-4 py-2 mt-4 rounded hover:bg-blue-600">
         Evaluate Assignment
       </button>
 
-      {evaluation && <p className="mt-4 p-4 border rounded">{evaluation}</p>}
+      {evaluation && <p className="mt-4 p-4 border rounded">Evaluation: {evaluation}</p>}
+      {plagiarismResult && <p className="mt-2 p-4 border rounded">Plagiarism Result: {plagiarismResult}</p>}
     </div>
   );
 };

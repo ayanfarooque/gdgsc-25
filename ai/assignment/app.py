@@ -76,5 +76,27 @@ def generate_prompt(student_answer, model_answer, rubric, total_marks):
 
     return prompt
 
+@app.route("/api/assignments/plagiarism", methods=["POST"])
+def check_plagiarism():
+    data = request.json
+    student_answer = data.get("student_answer", "").strip()
+    model_answer = data.get("model_answer", "").strip()
+
+    if not student_answer or not model_answer:
+        return jsonify({"error": "Student answer and model answer are required"}), 400
+
+    prompt = (
+        f"Check for plagiarism in the student's answer compared to the model answer.\n"
+        f"Student Answer: {student_answer}\n"
+        f"Model Answer: {model_answer}\n"
+        f"Provide a similarity percentage and a brief explanation."
+    )
+
+    chat_session = model.start_chat(history=[])
+    response = chat_session.send_message(prompt)
+    
+    response_text = response.text
+    return jsonify({"plagiarism_check": response_text})
+
 if __name__ == "__main__":
     app.run(debug=True)
