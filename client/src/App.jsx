@@ -17,6 +17,7 @@ import OverviewPage from './pages/Dashboardpages/OverviewPage';
 import Chatbot from './pages/Chatbot';
 import TeachersOverview from './pages/TeacherPages/TeachersOverview';
 import Notification from './pages/Notification';
+import NewsList from './components/NewsResourcesComponent/NewsList';
 
 const App = () => {
   const [selectedRole, setSelectedRole] = useState("");
@@ -43,6 +44,7 @@ const App = () => {
           <Route path='/test' element={<TestPage />} />
           <Route path='/Assignment' element={<AssignmentPage />} />
           <Route path='/Resources' element={<ResourcePage />} />
+          <Route path='news' element={<NewsList />} />
           <Route path="/news/:newsId" element={<NewsDetail />} />
           <Route path='/teacher-Assignment' element={<TeacherAssignment />} />
           <Route path='/status-page' element={<StatusPage />} />
