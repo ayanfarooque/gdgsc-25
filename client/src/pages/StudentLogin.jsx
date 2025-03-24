@@ -43,7 +43,7 @@ function StudentLogin() {
         <LoginContext.PageWrapper>
             
 
-            <LoginContext.Container>
+            <LoginContext.Container className="h-[600px] text-xl">
                 <LoginContext.SignUpContainer signinIn={isStudentSignIn}>
                     <LoginContext.Form onSubmit={onSubmitHandler}>
                         <LoginContext.Title>Create Student Account</LoginContext.Title>

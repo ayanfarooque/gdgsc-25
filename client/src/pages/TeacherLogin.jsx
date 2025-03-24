@@ -56,13 +56,13 @@ function TeacherLogin() {
                 Back
             </button>
 
-            <LoginContext.Container>
+            <LoginContext.Container className=" h-[600px] text-xl">
                 <LoginContext.SignUpContainer signinIn={isTeacherSignIn}>
                     <LoginContext.Form onSubmit={onSubmitHandler}>
                         <LoginContext.Title>Create Teacher Account</LoginContext.Title>
-                        <LoginContext.Input type="text" placeholder="Teacher Name" />
-                        <LoginContext.Input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Teacher Email" />
-                        <LoginContext.Input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" />
+                        <LoginContext.Input className="w-full h-12 text-lg p-3 border rounded-md" type="text" placeholder="Teacher Name" />
+                        <LoginContext.Input className="w-full h-12 text-lg p-3 border rounded-md" onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Teacher Email" />
+                        <LoginContext.Input className="w-full h-12 text-lg p-3 border rounded-md" onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" />
                         <LoginContext.Button type="submit">Sign Up</LoginContext.Button>
                     </LoginContext.Form>
                 </LoginContext.SignUpContainer>
@@ -77,7 +77,7 @@ function TeacherLogin() {
                     </LoginContext.Form>
                 </LoginContext.SignInContainer>
 
-                <LoginContext.OverlayContainer signinIn={isTeacherSignIn}>
+                <LoginContext.OverlayContainer className="w-full h-full" signinIn={isTeacherSignIn}>
                     <LoginContext.Overlay signinIn={isTeacherSignIn}>
                         <LoginContext.LeftOverlayPanel signinIn={isTeacherSignIn}>
                             <LoginContext.Title>Welcome Back, Teacher!</LoginContext.Title>
