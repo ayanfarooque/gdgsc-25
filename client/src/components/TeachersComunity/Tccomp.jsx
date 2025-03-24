@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { FiSearch } from "react-icons/fi";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Tccomp = () => {
   const [doubt, setDoubt] = useState("");
+  const [isPosting, setIsPosting] = useState(false);
 
   const questions = [
     {
@@ -14,6 +17,53 @@ const Tccomp = () => {
       chapter: "",
     },
   ];
+
+  const handlePostDoubt = async () => {
+    if (!doubt.trim()) {
+      toast.warning("Please enter your doubt before posting");
+      return;
+    }
+
+    setIsPosting(true);
+    
+    try {
+      const response = await fetch('http://127.0.0.1:5000/moderate-message', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          text: doubt,
+          username: "Mr Pawar" // You might want to get this from auth context
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!data.allow_post) {
+        toast.error(`Message not allowed: ${data.message}`);
+      } else if (data.allow_post === "warning") {
+        toast.warning(`Warning: ${data.message}`);
+        // You might still want to post it with a warning
+        proceedWithPosting();
+      } else {
+        proceedWithPosting();
+      }
+    } catch (error) {
+      console.error("Moderation error:", error);
+      toast.error("Failed to check message. Please try again.");
+    } finally {
+      setIsPosting(false);
+    }
+  };
+
+  const proceedWithPosting = () => {
+    // Here you would normally send the doubt to your backend
+    toast.success("Doubt posted successfully!");
+    setDoubt("");
+    // Add your actual API call to post the doubt to your database
+    // ...
+  };
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-lg border">
@@ -68,8 +118,12 @@ const Tccomp = () => {
             value={doubt}
             onChange={(e) => setDoubt(e.target.value)}
           ></textarea>
-          <button className="bg-blue-500 text-white py-2 px-4 mt-3 rounded-lg hover:bg-blue-600 transition">
-            POST
+          <button 
+            className="bg-blue-500 text-white py-2 px-4 mt-3 rounded-lg hover:bg-blue-600 transition disabled:opacity-50"
+            onClick={handlePostDoubt}
+            disabled={isPosting}
+          >
+            {isPosting ? "Checking..." : "POST"}
           </button>
         </div>
       </div>

@@ -1,8 +1,13 @@
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from deep_translator import GoogleTranslator
 from langdetect import detect, LangDetectException
 import json
 import os
+
+app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 class MessageModerator:
     def __init__(self, config_path='moderation_config.json'):
@@ -144,3 +149,100 @@ class MessageModerator:
 
         # Positive or neutral message
         return True, "Message allowed", sentiment_score
+
+# Initialize message moderator
+moderator = MessageModerator()
+
+@app.route('/moderate-message', methods=['POST'])
+def moderate_message():
+    """
+    Endpoint for message moderation.
+    Expects JSON with 'text' and 'username' fields.
+    Returns moderation result.
+    """
+    data = request.json
+    
+    # Validate input
+    if not data or 'text' not in data or 'username' not in data:
+        return jsonify({
+            'success': False,
+            'message': 'Invalid input. Requires text and username.',
+            'allow_post': False
+        }), 400
+
+    text = data['text']
+    username = data['username']
+
+    # Moderate the message
+    is_allowed, reason, sentiment_score = moderator.moderate_message(text, username)
+
+    # Prepare response
+    response = {
+        'success': is_allowed is True,
+        'message': reason,
+        'allow_post': is_allowed,
+        'sentiment_score': sentiment_score
+    }
+
+    # Determine appropriate HTTP status
+    status_code = 200 if is_allowed is True else 403
+
+    return jsonify(response), status_code
+
+@app.route('/reset-warnings', methods=['POST'])
+def reset_user_warnings():
+    """
+    Endpoint to reset a user's warning count.
+    Expects JSON with 'username' field.
+    """
+    data = request.json
+    
+    # Validate input
+    if not data or 'username' not in data:
+        return jsonify({
+            'success': False,
+            'message': 'Invalid input. Requires username.'
+        }), 400
+
+    username = data['username']
+
+    # Reset warnings
+    moderator.reset_user_warnings(username)
+
+    return jsonify({
+        'success': True,
+        'message': f'Warnings reset for user {username}'
+    }), 200
+
+@app.route('/get-user-warnings', methods=['GET'])
+def get_user_warnings():
+    """
+    Endpoint to get a user's current warning count.
+    Expects username as a query parameter.
+    """
+    username = request.args.get('username')
+    
+    # Validate input
+    if not username:
+        return jsonify({
+            'success': False,
+            'message': 'Invalid input. Requires username.'
+        }), 400
+
+    # Get current warnings
+    warnings = moderator.config.get('user_sentiment_warnings', {}).get(username, 0)
+
+    return jsonify({
+        'success': True,
+        'username': username,
+        'warning_count': warnings
+    }), 200
+
+if __name__ == '__main__':
+    # Ensure config file exists
+    if not os.path.exists('moderation_config.json'):
+        with open('moderation_config.json', 'w') as f:
+            f.write('{"offensive_terms": [], "user_sentiment_warnings": {}}')
+    
+    # Run the Flask app
+    app.run(debug=True, port=5000)
