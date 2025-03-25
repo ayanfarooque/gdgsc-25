@@ -3,6 +3,7 @@ import axios from "axios";
 
 const AssignmentBot = () => {
   const [file, setFile] = useState(null);
+  const [fileName, setFileName] = useState("");
   const [dragging, setDragging] = useState(false);
   const [studentAnswer, setStudentAnswer] = useState("");
   const [modelAnswer, setModelAnswer] = useState("");
@@ -24,6 +25,7 @@ const AssignmentBot = () => {
     const selectedFile = event.target.files[0];
     if (selectedFile && validateFile(selectedFile)) {
       setFile(selectedFile);
+      setFileName(selectedFile.name);
     }
   };
 
@@ -33,6 +35,7 @@ const AssignmentBot = () => {
     const droppedFile = event.dataTransfer.files[0];
     if (droppedFile && validateFile(droppedFile)) {
       setFile(droppedFile);
+      setFileName(droppedFile.name);
     }
   };
 
@@ -44,11 +47,19 @@ const AssignmentBot = () => {
 
     const formData = new FormData();
     formData.append("file", file);
+    formData.append("studentid", "12345");
+    formData.append("subjectid", "67890");
+    formData.append("teacherid", "54321");
+    formData.append("assignmentId", "A1");
+    formData.append("classroomId", "C1");
+    formData.append("chatId", "CH123");
 
     try {
-      const response = await axios.post("http://localhost:5000/api/assignments/upload", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      const response = await axios.post(
+        "http://localhost:5000/api/assignments/upload",
+        formData,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
       alert("File uploaded successfully!");
       console.log(response.data);
     } catch (error) {
@@ -98,23 +109,48 @@ const AssignmentBot = () => {
       <div
         className={`p-6 rounded-lg border-2 border-dashed ${dragging ? "border-blue-500 bg-blue-100" : "border-gray-400"}`}
         onDrop={handleDrop}
-        onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
+        onDragOver={(e) => {
+          e.preventDefault();
+          setDragging(true);
+        }}
         onDragLeave={() => setDragging(false)}
       >
         <input type="file" accept=".pdf,.jpg,.jpeg,.png" className="hidden" id="fileInput" onChange={handleFileChange} />
         <label htmlFor="fileInput" className="cursor-pointer bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
           Select File
         </label>
+        {fileName && <p className="mt-2 text-sm text-gray-700">Selected File: {fileName}</p>}
       </div>
 
       <button onClick={handleUpload} className="bg-green-500 text-white px-4 py-2 mt-4 rounded hover:bg-green-600">
         Upload File
       </button>
 
-      <textarea className="w-full p-2 mt-4 border rounded" placeholder="Enter Student's Answer" value={studentAnswer} onChange={(e) => setStudentAnswer(e.target.value)} />
-      <textarea className="w-full p-2 mt-2 border rounded" placeholder="Enter Model Answer (Optional)" value={modelAnswer} onChange={(e) => setModelAnswer(e.target.value)} />
-      <textarea className="w-full p-2 mt-2 border rounded" placeholder="Enter Rubric (Optional)" value={rubric} onChange={(e) => setRubric(e.target.value)} />
-      <input type="number" className="w-full p-2 mt-2 border rounded" placeholder="Enter Total Marks" value={totalMarks} onChange={(e) => setTotalMarks(e.target.value)} />
+      <textarea
+        className="w-full p-2 mt-4 border rounded"
+        placeholder="Enter Student's Answer"
+        value={studentAnswer}
+        onChange={(e) => setStudentAnswer(e.target.value)}
+      />
+      <textarea
+        className="w-full p-2 mt-2 border rounded"
+        placeholder="Enter Model Answer (Optional)"
+        value={modelAnswer}
+        onChange={(e) => setModelAnswer(e.target.value)}
+      />
+      <textarea
+        className="w-full p-2 mt-2 border rounded"
+        placeholder="Enter Rubric (Optional)"
+        value={rubric}
+        onChange={(e) => setRubric(e.target.value)}
+      />
+      <input
+        type="number"
+        className="w-full p-2 mt-2 border rounded"
+        placeholder="Enter Total Marks"
+        value={totalMarks}
+        onChange={(e) => setTotalMarks(e.target.value)}
+      />
 
       <button onClick={handleEvaluate} className="bg-blue-500 text-white px-4 py-2 mt-4 rounded hover:bg-blue-600">
         Evaluate Assignment
