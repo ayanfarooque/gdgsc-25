@@ -18,6 +18,7 @@ import Chatbot from './pages/Chatbot';
 import TeachersOverview from './pages/TeacherPages/TeachersOverview';
 import Notification from './pages/Notification';
 import NewsList from './components/NewsResourcesComponent/NewsList';
+import AssignmentCreation from './pages/AssignmentCreation';
 
 const App = () => {
   const [selectedRole, setSelectedRole] = useState("");
@@ -52,6 +53,7 @@ const App = () => {
           <Route path='/teacher-home' element={<TeachersOverview role={role} />} />
           <Route path='/prev' element={<TeacherHomePage />} />
           <Route path='/notification' element={<Notification />} />
+          <Route path='/createassignment' element={<AssignmentCreation />} />
         </Routes>
       </div>
     </div>

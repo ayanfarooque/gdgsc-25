@@ -11,7 +11,8 @@ import {
   Settings,
   Menu,
   Newspaper,
-  Bell 
+  Bell,
+  FilePlus 
 } from "lucide-react";
 import SidebarItem from "./SidebarItem";
 
@@ -27,6 +28,7 @@ const Sidebar = ({ role }) => {
     { name: "ChatBot", icon: MessageCircle, color: "#10B981", path: "/chat-page" },
     { name: "Settings", icon: Settings, color: "#6EE7B7", path: "/settings" },
     { name: "Notifications", icon: Bell, color: "#8B5CF6", path: "/notification"},
+    
   ];
 
   const TEACHER_ITEMS = [
@@ -34,6 +36,7 @@ const Sidebar = ({ role }) => {
     { name: "Community", icon: Users, color: "#D946EF", path: "/teachers-Community" }, 
     { name: "Assignment", icon: BookOpen, color: "#14B8A6", path: "/teacher-Assignment" }, 
     { name: "Newspaper", icon: CalendarDays, color: "#F43F5E", path: "/Resources" }, 
+    { name: "CreateAssignment", icon: FilePlus, color: "#F59E0B", path: "/createassignment" }
   ];
 
   const SIDEBAR_ITEMS = role === "teacher" ? TEACHER_ITEMS : STUDENT_ITEMS;
